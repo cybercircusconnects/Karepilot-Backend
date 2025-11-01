@@ -1,2 +1,2 @@
-export * from './mobileTypes';
+export * from './user';
 

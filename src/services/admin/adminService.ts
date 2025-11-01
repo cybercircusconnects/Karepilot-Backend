@@ -1,6 +1,6 @@
 import { AdminUser, AdminRole, IAdminUser } from "../../models/admin";
 import { generateToken } from "../../utils/index";
-import { uploadImage, deleteImage, extractPublicIdFromUrl } from "../common/imageService";
+import { uploadImage, deleteImage, extractPublicIdFromUrl } from "../common/image";
 import {
   CreateAdminUserData,
   UpdateAdminUserData,

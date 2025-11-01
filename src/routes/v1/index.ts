@@ -1,6 +1,6 @@
 import { Router } from "express";
 import adminRouter from "./admin/admin";
-import mobileRouter from "./mobile/mobile";
+import mobileRouter from "./mobile/user";
 import uploadRouter from "./common/upload";
 
 const mainRouter = Router();

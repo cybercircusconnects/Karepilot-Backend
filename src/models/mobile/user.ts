@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import * as bcrypt from "bcryptjs";
-import { IMobileUser, MobileUserStatus } from "../../types/mobile/mobileTypes";
+import { IMobileUser, MobileUserStatus } from "../../types/mobile/user";
 
 const mobileUserSchema = new Schema<IMobileUser>(
   {

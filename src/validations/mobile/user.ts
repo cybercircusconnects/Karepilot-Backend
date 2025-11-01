@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { MobileUserStatus } from '../../types/mobile/mobileTypes';
 
 const emailSchema = Joi.string()
   .email({ tlds: { allow: false } })

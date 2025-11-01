@@ -1,7 +1,7 @@
 import { MobileUser } from "../../models/mobile";
 import { generateToken } from "../../utils/index";
 import { emailService } from "../common";
-import { deleteImage, extractPublicIdFromUrl } from "../common/imageService";
+import { deleteImage, extractPublicIdFromUrl } from "../common/image";
 import {
   CreateMobileUserData,
   UpdateMobileUserData,
@@ -10,7 +10,7 @@ import {
   VerificationResponse,
   IMobileUser,
   MobileUserStatus,
-} from "../../types/mobile/mobileTypes";
+} from "../../types/mobile/user";
 
 export class MobileUserService {
   async createMobileUser(data: CreateMobileUserData): Promise<MobileUserResult> {

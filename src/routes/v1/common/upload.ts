@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadFile, deleteFile } from "../../../controllers/common/uploadController";
+import { uploadFile, deleteFile } from "../../../controllers/common/upload";
 import { uploadSingleFile } from "../../../middlewares/upload";
 
 const uploadRouter = Router();
