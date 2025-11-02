@@ -36,7 +36,25 @@ const roleSchema = Joi.string()
   });
 
 export const adminUserRegistrationSchema = Joi.object({
-  name: nameSchema,
+  firstName: Joi.string()
+    .min(2)
+    .max(50)
+    .trim()
+    .optional()
+    .messages({
+      'string.min': 'First name must be at least 2 characters long',
+      'string.max': 'First name cannot exceed 50 characters'
+    }),
+  lastName: Joi.string()
+    .min(2)
+    .max(50)
+    .trim()
+    .optional()
+    .messages({
+      'string.min': 'Last name must be at least 2 characters long',
+      'string.max': 'Last name cannot exceed 50 characters'
+    }),
+  name: nameSchema.optional(),
   email: emailSchema,
   password: passwordSchema,
   role: roleSchema.default(AdminRole.VIEWER),
@@ -44,7 +62,7 @@ export const adminUserRegistrationSchema = Joi.object({
   phoneNumber: Joi.string().trim().optional(),
   badgeNumber: Joi.string().trim().optional(),
   shift: Joi.string().trim().optional()
-});
+}).or('name', 'firstName');
 
 export const adminUserLoginSchema = Joi.object({
   email: emailSchema,

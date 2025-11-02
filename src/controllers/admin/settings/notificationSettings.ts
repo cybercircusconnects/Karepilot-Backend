@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AdminSettingsService } from '../../../services/admin/settings/admin';
+import { NotificationSettingsService } from '../../../services/admin/settings';
 
 export const getNotificationSettings = async (req: Request, res: Response) => {
   try {
@@ -12,7 +12,7 @@ export const getNotificationSettings = async (req: Request, res: Response) => {
       });
     }
 
-    const settings = await AdminSettingsService.getNotificationSettings(userId);
+    const settings = await NotificationSettingsService.getNotificationSettings(userId);
 
     return res.status(200).json({
       success: true,
@@ -40,7 +40,7 @@ export const updateNotificationSettings = async (req: Request, res: Response) =>
       });
     }
 
-    const settings = await AdminSettingsService.updateNotifications(userId, req.body);
+    const settings = await NotificationSettingsService.updateNotifications(userId, req.body);
 
     return res.status(200).json({
       success: true,

@@ -92,8 +92,6 @@ const adminGeneralSettingsSchema = new Schema<IAdminGeneralSettings>(
   }
 );
 
-adminGeneralSettingsSchema.index({ userId: 1 });
-
 const AdminGeneralSettings = mongoose.model<IAdminGeneralSettings>(
   "AdminGeneralSettings", 
   adminGeneralSettingsSchema

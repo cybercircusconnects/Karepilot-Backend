@@ -159,7 +159,6 @@ const adminUserSchema = new Schema<IAdminUser>(
   },
 );
 
-adminUserSchema.index({ email: 1 });
 adminUserSchema.index({ role: 1 });
 adminUserSchema.index({ isActive: 1 });
 adminUserSchema.index({ department: 1 });

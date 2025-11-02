@@ -65,7 +65,6 @@ const mobileUserSchema = new Schema<IMobileUser>(
   },
 );
 
-mobileUserSchema.index({ email: 1 });
 mobileUserSchema.index({ status: 1 });
 mobileUserSchema.index({ isEmailVerified: 1 });
 

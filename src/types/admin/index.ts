@@ -1,3 +1,3 @@
 export * from './adminTypes';
-export * from './settings/admin';
+export * from './settings';
 

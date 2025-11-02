@@ -1,3 +1,3 @@
-export * from './general';
-export * from './notification';
-export * from './security';
+export * from './generalSettings';
+export * from './notificationSettings';
+export * from './securitySettings';

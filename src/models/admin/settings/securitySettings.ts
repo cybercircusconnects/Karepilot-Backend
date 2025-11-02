@@ -54,8 +54,6 @@ const adminSecuritySettingsSchema = new Schema<IAdminSecuritySettings>(
   }
 );
 
-adminSecuritySettingsSchema.index({ userId: 1 });
-
 const AdminSecuritySettings = mongoose.model<IAdminSecuritySettings>(
   "AdminSecuritySettings", 
   adminSecuritySettingsSchema

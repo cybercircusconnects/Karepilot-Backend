@@ -53,8 +53,6 @@ const adminNotificationSettingsSchema = new Schema<IAdminNotificationSettings>(
   }
 );
 
-adminNotificationSettingsSchema.index({ userId: 1 });
-
 const AdminNotificationSettings = mongoose.model<IAdminNotificationSettings>(
   "AdminNotificationSettings", 
   adminNotificationSettingsSchema

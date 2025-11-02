@@ -1,7 +1,9 @@
 import { IAdminUser, AdminRole, Permission } from '../../models/admin';
 
 export interface CreateAdminUserData {
-  name: string;
+  firstName?: string;
+  lastName?: string;
+  name?: string; 
   email: string;
   password: string;
   role?: AdminRole;

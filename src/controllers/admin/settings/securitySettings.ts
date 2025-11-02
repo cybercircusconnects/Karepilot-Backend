@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { AdminSettingsService } from '../../../services/admin/settings/admin';
+import { SecuritySettingsService } from '../../../services/admin/settings';
 
-export const getGeneralSettings = async (req: Request, res: Response) => {
+export const getSecuritySettings = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     
@@ -12,24 +12,24 @@ export const getGeneralSettings = async (req: Request, res: Response) => {
       });
     }
 
-    const settings = await AdminSettingsService.getGeneralSettings(userId);
+    const settings = await SecuritySettingsService.getSecuritySettings(userId);
 
     return res.status(200).json({
       success: true,
-      message: 'General settings retrieved successfully',
+      message: 'Security settings retrieved successfully',
       data: settings
     });
   } catch (error: any) {
-    console.error('Get general settings error:', error);
+    console.error('Get security settings error:', error);
     return res.status(500).json({
-      success: false,
+    success: false,
       message: 'Internal server error',
       error: error.message
     });
   }
 };
 
-export const updateProfileSettings = async (req: Request, res: Response) => {
+export const updateSecuritySettings = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     
@@ -40,15 +40,15 @@ export const updateProfileSettings = async (req: Request, res: Response) => {
       });
     }
 
-    const settings = await AdminSettingsService.updateProfile(userId, req.body);
+    const settings = await SecuritySettingsService.updateSecuritySettings(userId, req.body);
 
     return res.status(200).json({
       success: true,
-      message: 'Profile settings updated successfully',
+      message: 'Security settings updated successfully',
       data: settings
     });
   } catch (error: any) {
-    console.error('Update profile settings error:', error);
+    console.error('Update security settings error:', error);
     return res.status(500).json({
       success: false,
       message: error.message || 'Internal server error'
@@ -56,7 +56,7 @@ export const updateProfileSettings = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUserPreferences = async (req: Request, res: Response) => {
+export const changePassword = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     
@@ -67,15 +67,14 @@ export const updateUserPreferences = async (req: Request, res: Response) => {
       });
     }
 
-    const settings = await AdminSettingsService.updatePreferences(userId, req.body);
+    await SecuritySettingsService.changePassword(userId, req.body);
 
     return res.status(200).json({
       success: true,
-      message: 'User preferences updated successfully',
-      data: settings
+      message: 'Password changed successfully'
     });
   } catch (error: any) {
-    console.error('Update user preferences error:', error);
+    console.error('Change password error:', error);
     return res.status(500).json({
       success: false,
       message: error.message || 'Internal server error'

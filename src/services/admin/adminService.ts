@@ -17,8 +17,19 @@ export class AdminUserService {
       throw new Error("Admin user with this email already exists");
     }
 
+    let fullName: string;
+    if (data.firstName && data.lastName) {
+      fullName = `${data.firstName} ${data.lastName}`.trim();
+    } else if (data.firstName) {
+      fullName = data.firstName;
+    } else if (data.name) {
+      fullName = data.name;
+    } else {
+      throw new Error("Either 'name' or 'firstName' and 'lastName' must be provided");
+    }
+
     const adminUser = new AdminUser({
-      name: data.name,
+      name: fullName,
       email: data.email,
       password: data.password,
       role: data.role || AdminRole.VIEWER,
