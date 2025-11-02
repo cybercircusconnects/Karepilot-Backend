@@ -33,8 +33,19 @@ export const adminProfileUpdateSchema = Joi.object({
     }),
   
   profileImage: Joi.string()
-    .uri()
+    .allow('', null)
     .optional()
+    .custom((value, helpers) => {
+      if (!value || value === '') {
+        return value;
+      }
+      try {
+        new URL(value);
+        return value;
+      } catch {
+        return helpers.error('string.uri');
+      }
+    })
     .messages({
       'string.uri': 'Profile image must be a valid URL'
     })
@@ -133,8 +144,21 @@ export const adminGeneralSettingsSchema = Joi.object({
     }),
   
   profileImage: Joi.string()
-    .uri()
+    .allow('', null)
     .optional()
+    .custom((value, helpers) => {
+      // If empty string or null, allow it
+      if (!value || value === '') {
+        return value;
+      }
+      // If value exists, validate it's a URI
+      try {
+        new URL(value);
+        return value;
+      } catch {
+        return helpers.error('string.uri');
+      }
+    })
     .messages({
       'string.uri': 'Profile image must be a valid URL'
     }),
