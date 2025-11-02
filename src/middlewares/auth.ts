@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { AdminUser, IAdminUser, Permission, AdminRole } from "../models/admin";
+import { AdminUser, IAdminUser, AdminRole } from "../models/admin/user-management";
 import { MobileUser } from "../models/mobile";
 import { verifyToken } from "../utils/auth";
 import { IMobileUser } from "../types/mobile/mobileUser";
+import { IPermission } from "../models/admin/user-management/roles-permissions";
 
 declare global {
   namespace Express {
@@ -97,21 +98,12 @@ export const authenticateMobile = async (
   }
 };
 
-export const requirePermission = (permission: Permission) => {
+export const requirePermission = (permission: keyof IPermission) => {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user || req.userType !== "admin") {
       res.status(401).json({
         success: false,
         message: "Admin authentication required.",
-      });
-      return;
-    }
-
-    const adminUser = req.user as IAdminUser;
-    if (!adminUser.hasPermission(permission)) {
-      res.status(403).json({
-        success: false,
-        message: `Access denied. Required permission: ${permission}`,
       });
       return;
     }
@@ -120,21 +112,12 @@ export const requirePermission = (permission: Permission) => {
   };
 };
 
-export const requireAnyPermission = (permissions: Permission[]) => {
+export const requireAnyPermission = (permissions: (keyof IPermission)[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user || req.userType !== "admin") {
       res.status(401).json({
         success: false,
         message: "Admin authentication required.",
-      });
-      return;
-    }
-
-    const adminUser = req.user as IAdminUser;
-    if (!adminUser.hasAnyPermission(permissions)) {
-      res.status(403).json({
-        success: false,
-        message: `Access denied. Required any of these permissions: ${permissions.join(", ")}`,
       });
       return;
     }

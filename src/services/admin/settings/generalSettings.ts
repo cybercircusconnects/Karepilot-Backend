@@ -12,7 +12,8 @@ export class GeneralSettingsService {
         throw new Error('Admin user not found');
       }
 
-      const nameParts = adminUser.name.split(' ').filter(part => part.trim());
+      const name = (adminUser as any).name || '';
+      const nameParts = name.split(' ').filter((part: string) => part && part.trim());
       const firstName = nameParts[0] || 'Admin';
       const lastName = nameParts.slice(1).join(' ').trim() || 'User';
 
