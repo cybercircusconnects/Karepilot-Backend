@@ -1,0 +1,32 @@
+import dbConnect from "../config/dbConnect";
+import seedAdminUser from "./adminUser.seeder";
+import seedRoles from "./roles.seeder";
+
+const runAllSeeders = async () => {
+  try {
+    console.log("🌱 Starting database seeders...\n");
+
+    await dbConnect();
+    console.log("");
+
+    console.log("📋 Seeding roles...");
+    await seedRoles();
+    console.log("");
+
+    console.log("👤 Seeding admin user...");
+    await seedAdminUser();
+
+    console.log("\n✅ All seeders completed successfully!");
+    process.exit(0);
+  } catch (error: any) {
+    console.error("❌ Error running seeders:", error.message);
+    process.exit(1);
+  }
+};
+
+if (require.main === module) {
+  runAllSeeders();
+}
+
+export default runAllSeeders;
+
