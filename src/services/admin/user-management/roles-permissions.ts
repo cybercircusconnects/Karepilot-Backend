@@ -9,7 +9,7 @@ import {
 
 export class RolesPermissionsService {
   async getAllRolesPermissions() {
-    const rolesPermissions = await RolePermissions.find({ isActive: true })
+    const rolesPermissions = await RolePermissions.find({ isActive: true }).sort({ createdAt: -1 });
 
     return rolesPermissions.map((rp) => ({
       id: rp._id,
