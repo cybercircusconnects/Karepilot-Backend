@@ -12,7 +12,14 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
     if (req.query.department) query.department = req.query.department as string;
     if (req.query.search) query.search = req.query.search as string;
     if (req.query.status) query.status = req.query.status as string;
-    if (req.query.isActive !== undefined) query.isActive = req.query.isActive === 'true';
+    if (req.query.isActive !== undefined && req.query.isActive !== null) {
+      if (typeof req.query.isActive === 'boolean') {
+        query.isActive = req.query.isActive;
+      } else {
+        const strValue = String(req.query.isActive).toLowerCase().trim();
+        query.isActive = strValue === 'true' || strValue === '1';
+      }
+    }
 
     const result = await usersService.getAllUsers(query);
 
@@ -35,7 +42,7 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
           lastLogin: user.lastLogin,
           lastActive: user.lastLogin ? formatTimeAgo(user.lastLogin) : "Never",
           currentLocation: user.currentLocation || null,
-          status: user.status || UserStatus.PENDING,
+          status: user.status || UserStatus.ACTIVE,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
         })),
@@ -74,7 +81,7 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
           lastLogin: user.lastLogin,
           lastActive: user.lastLogin ? formatTimeAgo(user.lastLogin) : "Never",
           currentLocation: user.currentLocation || null,
-          status: user.status || UserStatus.PENDING,
+          status: user.status || UserStatus.ACTIVE,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
         },
@@ -145,7 +152,7 @@ export const updateUser = async (req: Request, res: Response): Promise<void> => 
           lastLogin: user.lastLogin,
           lastActive: user.lastLogin ? formatTimeAgo(user.lastLogin) : "Never",
           currentLocation: user.currentLocation || null,
-          status: user.status || UserStatus.PENDING,
+          status: user.status || UserStatus.ACTIVE,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
         },

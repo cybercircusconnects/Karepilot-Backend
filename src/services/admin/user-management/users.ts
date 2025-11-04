@@ -86,7 +86,7 @@ export class UsersService {
       badgeNumber: data.badgeNumber,
       shift: data.shift,
       currentLocation: data.currentLocation,
-      status: data.status || UserStatus.PENDING,
+      status: data.status || UserStatus.ACTIVE,
     });
 
     await user.save();

@@ -12,7 +12,7 @@ const statusSchema = Joi.string()
   .valid(...Object.values(UserStatus))
   .optional()
   .messages({
-    'any.only': 'Invalid status specified. Must be one of: active, pending, inactive'
+    'any.only': 'Invalid status specified. Must be one of: active, inactive'
   });
 
 export const createUserSchema = Joi.object({

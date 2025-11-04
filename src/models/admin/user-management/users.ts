@@ -5,7 +5,6 @@ import Department from "./departments";
 
 export enum UserStatus {
   ACTIVE = "active",
-  PENDING = "pending",
   INACTIVE = "inactive",
 }
 
@@ -97,7 +96,7 @@ const adminUserSchema = new Schema<IAdminUser>(
     status: {
       type: String,
       enum: Object.values(UserStatus),
-      default: UserStatus.PENDING,
+      default: UserStatus.ACTIVE,
     },
     lastLogin: {
       type: Date,
