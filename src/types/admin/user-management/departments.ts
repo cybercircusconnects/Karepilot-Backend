@@ -16,6 +16,7 @@ export interface DepartmentQuery {
   page?: number;
   limit?: number;
   search?: string;
+  name?: string;
   isActive?: boolean;
 }
 

@@ -7,7 +7,15 @@ export const getAllDepartments = async (req: Request, res: Response): Promise<vo
     if (req.query.page) query.page = parseInt(req.query.page as string);
     if (req.query.limit) query.limit = parseInt(req.query.limit as string);
     if (req.query.search) query.search = req.query.search as string;
-    if (req.query.isActive !== undefined) query.isActive = req.query.isActive === 'true';
+    if (req.query.name) query.name = req.query.name as string;
+    if (req.query.isActive !== undefined && req.query.isActive !== null) {
+      if (typeof req.query.isActive === 'boolean') {
+        query.isActive = req.query.isActive;
+      } else {
+        const strValue = String(req.query.isActive).toLowerCase().trim();
+        query.isActive = strValue === 'true' || strValue === '1';
+      }
+    }
 
     const result = await departmentsService.getAllDepartments(query);
 

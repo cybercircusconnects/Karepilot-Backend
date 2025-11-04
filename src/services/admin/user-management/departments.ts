@@ -6,9 +6,11 @@ export class DepartmentsService {
     const page = query.page || 1;
     const limit = query.limit || 10;
 
-    const dbQuery: any = { isActive: true };
+    const dbQuery: any = {};
 
-    if (query.search) {
+    if (query.name) {
+      dbQuery.name = { $regex: new RegExp(`^${query.name}$`, "i") };
+    } else if (query.search) {
       dbQuery.$or = [
         { name: { $regex: query.search, $options: "i" } },
         { description: { $regex: query.search, $options: "i" } },
@@ -17,6 +19,8 @@ export class DepartmentsService {
 
     if (query.isActive !== undefined) {
       dbQuery.isActive = query.isActive;
+    } else {
+      dbQuery.isActive = true;
     }
 
     const skip = (page - 1) * limit;
