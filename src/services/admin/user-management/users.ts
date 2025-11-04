@@ -85,6 +85,7 @@ export class UsersService {
       phoneNumber: data.phoneNumber,
       badgeNumber: data.badgeNumber,
       shift: data.shift,
+      currentLocation: data.currentLocation,
       status: data.status || UserStatus.PENDING,
     });
 

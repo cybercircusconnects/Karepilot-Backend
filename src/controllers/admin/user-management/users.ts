@@ -106,6 +106,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
           phoneNumber: user.phoneNumber,
           badgeNumber: user.badgeNumber,
           shift: user.shift,
+          currentLocation: user.currentLocation,
           isActive: user.isActive,
         },
       },

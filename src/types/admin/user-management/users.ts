@@ -11,6 +11,7 @@ export interface CreateUserData {
   phoneNumber?: string;
   badgeNumber?: string;
   shift?: string;
+  currentLocation?: string;
   status?: UserStatus;
 }
 
@@ -24,6 +25,7 @@ export interface UpdateUserData {
   phoneNumber?: string;
   badgeNumber?: string;
   shift?: string;
+  currentLocation?: string;
   profileImage?: string;
   isActive?: boolean;
   status?: UserStatus;
