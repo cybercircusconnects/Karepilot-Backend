@@ -89,7 +89,6 @@ const seedUsers = async () => {
         continue;
       }
 
-      // Get department ID if department name is provided
       let departmentId = null;
       if (userData.departmentName) {
         const deptId = departmentMap.get(userData.departmentName.toLowerCase());
