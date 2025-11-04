@@ -21,3 +21,9 @@ export interface RolePermissionsListResult {
   updatedAt: Date;
 }
 
+export interface RolePermissionsQuery {
+  search?: string;
+  role?: AdminRole;
+  isActive?: boolean;
+}
+

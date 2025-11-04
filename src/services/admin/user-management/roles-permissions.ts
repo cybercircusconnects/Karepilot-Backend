@@ -5,11 +5,26 @@ import RolePermissions, {
 import {
   CreateRolePermissionsData,
   UpdateRolePermissionsData,
+  RolePermissionsQuery,
 } from "../../../types/admin/user-management/roles-permissions";
 
 export class RolesPermissionsService {
-  async getAllRolesPermissions() {
-    const rolesPermissions = await RolePermissions.find({ isActive: true }).sort({ createdAt: -1 });
+  async getAllRolesPermissions(query: RolePermissionsQuery = {}) {
+    const dbQuery: any = {};
+
+    if (query.role) {
+      dbQuery.role = query.role;
+    } else if (query.search) {
+      dbQuery.role = { $regex: query.search, $options: "i" };
+    }
+
+    if (query.isActive !== undefined) {
+      dbQuery.isActive = query.isActive;
+    } else {
+      dbQuery.isActive = true;
+    }
+
+    const rolesPermissions = await RolePermissions.find(dbQuery).sort({ createdAt: -1 });
 
     return rolesPermissions.map((rp) => ({
       id: rp._id,

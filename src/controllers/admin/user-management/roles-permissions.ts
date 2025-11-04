@@ -3,7 +3,20 @@ import { rolesPermissionsService } from "../../../services/admin/user-management
 
 export const getAllRolesPermissions = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await rolesPermissionsService.getAllRolesPermissions();
+    const query: any = {};
+    
+    if (req.query.search) query.search = req.query.search as string;
+    if (req.query.role) query.role = req.query.role as string;
+    if (req.query.isActive !== undefined && req.query.isActive !== null) {
+      if (typeof req.query.isActive === 'boolean') {
+        query.isActive = req.query.isActive;
+      } else {
+        const strValue = String(req.query.isActive).toLowerCase().trim();
+        query.isActive = strValue === 'true' || strValue === '1';
+      }
+    }
+
+    const result = await rolesPermissionsService.getAllRolesPermissions(query);
 
     res.status(200).json({
       success: true,
