@@ -83,7 +83,7 @@ export class OrganizationService {
       throw new Error("Venue template not found");
     }
 
-    const organization = new Organization({
+    const organization = await Organization.create({
       organizationType: data.organizationType,
       name: data.name,
       email: data.email.toLowerCase(),
@@ -94,14 +94,14 @@ export class OrganizationService {
       address: data.address,
       venueTemplate: data.venueTemplate,
       isActive: data.isActive !== undefined ? data.isActive : true,
-      createdBy: createdBy,
+      createdBy,
+      updatedBy: createdBy,
     });
-
-    await organization.save();
 
     return await Organization.findById(organization._id)
       .populate("venueTemplate", "name description")
-      .populate("createdBy", "firstName lastName email");
+      .populate("createdBy", "firstName lastName email")
+      .populate("updatedBy", "firstName lastName email");
   }
 
   async updateOrganization(id: string, data: UpdateOrganizationData, updatedBy: string) {

@@ -5,6 +5,7 @@ import Organization, {
 } from "../../models/admin/organization/organization";
 import VenueTemplate from "../../models/admin/organization/venueTemplate";
 import AdminUser from "../../models/admin/user-management/users";
+import { AdminRole } from "../../models/admin/user-management/roles-permissions";
 import { SeedOrganizationPayload } from "../../types";
 
 const organizationsToSeed: SeedOrganizationPayload[] = [
@@ -127,10 +128,16 @@ const seedOrganizations = async () => {
       );
     });
 
-    const adminUser = await AdminUser.findOne();
-    const createdBy = adminUser && adminUser._id instanceof mongoose.Types.ObjectId 
-      ? adminUser._id 
-      : null;
+    const adminUser = await AdminUser.findOne({ role: AdminRole.ADMIN }).select("_id");
+
+    if (!adminUser) {
+      console.warn("⚠️  No admin user found. Organizations will be seeded without creator information.");
+    }
+
+    const createdBy =
+      adminUser && adminUser._id instanceof mongoose.Types.ObjectId
+        ? adminUser._id
+        : null;
 
     let createdCount = 0;
     let skippedCount = 0;
@@ -170,6 +177,7 @@ const seedOrganizations = async () => {
         venueTemplate: templateId,
         isActive: orgData.isActive ?? true,
         createdBy,
+        updatedBy: createdBy,
       });
 
       console.log(`✅ Organization "${orgData.name}" created successfully!`);

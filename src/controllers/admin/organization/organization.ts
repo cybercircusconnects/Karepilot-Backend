@@ -1,6 +1,26 @@
 import { Request, Response } from "express";
 import { organizationService } from "../../../services/admin/organization";
 
+const serializeAdminUser = (user: any) => {
+  if (!user) {
+    return null;
+  }
+
+  const plain = typeof user.toObject === "function" ? user.toObject() : user;
+  const rawId =
+    plain?.id ??
+    plain?._id?.toString?.() ??
+    (typeof plain?._id === "string" ? plain._id : undefined);
+
+  return {
+    id: rawId,
+    _id: plain?._id ?? rawId,
+    firstName: plain?.firstName ?? "",
+    lastName: plain?.lastName ?? "",
+    email: plain?.email ?? "",
+  };
+};
+
 export const getAllOrganizations = async (req: Request, res: Response): Promise<void> => {
   try {
     const query: any = {};
@@ -38,8 +58,8 @@ export const getAllOrganizations = async (req: Request, res: Response): Promise<
           address: organization.address,
           venueTemplate: organization.venueTemplate,
           isActive: organization.isActive,
-          createdBy: organization.createdBy,
-          updatedBy: organization.updatedBy,
+          createdBy: serializeAdminUser(organization.createdBy),
+          updatedBy: serializeAdminUser(organization.updatedBy),
           createdAt: organization.createdAt,
           updatedAt: organization.updatedAt,
         })),
@@ -75,8 +95,8 @@ export const getOrganizationById = async (req: Request, res: Response): Promise<
           address: organization.address,
           venueTemplate: organization.venueTemplate,
           isActive: organization.isActive,
-          createdBy: organization.createdBy,
-          updatedBy: organization.updatedBy,
+          createdBy: serializeAdminUser(organization.createdBy),
+          updatedBy: serializeAdminUser(organization.updatedBy),
           createdAt: organization.createdAt,
           updatedAt: organization.updatedAt,
         },
@@ -119,7 +139,7 @@ export const createOrganization = async (req: Request, res: Response): Promise<v
           address: result?.address,
           venueTemplate: result?.venueTemplate,
           isActive: result?.isActive,
-          createdBy: result?.createdBy,
+          createdBy: serializeAdminUser(result?.createdBy),
         },
       },
     });
@@ -163,8 +183,8 @@ export const updateOrganization = async (req: Request, res: Response): Promise<v
           address: organization.address,
           venueTemplate: organization.venueTemplate,
           isActive: organization.isActive,
-          createdBy: organization.createdBy,
-          updatedBy: organization.updatedBy,
+          createdBy: serializeAdminUser(organization.createdBy),
+          updatedBy: serializeAdminUser(organization.updatedBy),
           createdAt: organization.createdAt,
           updatedAt: organization.updatedAt,
         },
