@@ -5,19 +5,7 @@ import Organization, {
 } from "../../models/admin/organization/organization";
 import VenueTemplate from "../../models/admin/organization/venueTemplate";
 import AdminUser from "../../models/admin/user-management/users";
-
-interface SeedOrganizationPayload {
-  name: string;
-  organizationType: OrganizationType;
-  email: string;
-  phone?: string;
-  country: string;
-  city: string;
-  timezone: string;
-  address: string;
-  venueTemplateName: string;
-  isActive?: boolean;
-}
+import { SeedOrganizationPayload } from "../../types";
 
 const organizationsToSeed: SeedOrganizationPayload[] = [
   {
