@@ -1,4 +1,5 @@
 import seedVenueTemplates from "./venueTemplate.seeder";
+import seedOrganizations from "./organization.seeder";
 
 const runOrganizationSeeders = async () => {
   try {
@@ -6,6 +7,9 @@ const runOrganizationSeeders = async () => {
 
     console.log("🏗️  Seeding venue templates...");
     await seedVenueTemplates();
+
+    console.log("\n🏢 Seeding organizations...");
+    await seedOrganizations();
 
     console.log("\n✅ All Organization seeders completed successfully!");
   } catch (error: any) {
