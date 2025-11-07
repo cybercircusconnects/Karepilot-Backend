@@ -26,8 +26,6 @@ export class OrganizationService {
 
     if (query.isActive !== undefined) {
       dbQuery.isActive = query.isActive;
-    } else {
-      dbQuery.isActive = true;
     }
 
     const skip = (page - 1) * limit;
@@ -174,6 +172,15 @@ export class OrganizationService {
       .populate("venueTemplate", "name description")
       .populate("createdBy", "firstName lastName email")
       .populate("updatedBy", "firstName lastName email");
+  }
+
+  async deleteOrganizationPermanently(id: string) {
+    const organization = await Organization.findById(id);
+    if (!organization) {
+      throw new Error("Organization not found");
+    }
+
+    await Organization.findByIdAndDelete(id);
   }
 }
 

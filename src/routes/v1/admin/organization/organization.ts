@@ -5,6 +5,7 @@ import {
   createOrganization,
   updateOrganization,
   deleteOrganization,
+  deleteOrganizationPermanently,
 } from "../../../../controllers/admin/organization";
 import { authenticateAdmin } from "../../../../middlewares/auth";
 import {
@@ -42,6 +43,12 @@ organizationRouter.put(
   validate(organizationIdParamSchema, "params"),
   validate(updateOrganizationSchema),
   updateOrganization
+);
+
+organizationRouter.delete(
+  "/:id/permanent",
+  validate(organizationIdParamSchema, "params"),
+  deleteOrganizationPermanently
 );
 
 organizationRouter.delete(

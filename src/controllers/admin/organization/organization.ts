@@ -17,11 +17,7 @@ export const getAllOrganizations = async (req: Request, res: Response): Promise<
         query.isActive = isActiveValue.toLowerCase() === 'true';
       } else if (typeof isActiveValue === 'boolean') {
         query.isActive = isActiveValue;
-      } else {
-        query.isActive = true;
       }
-    } else {
-      query.isActive = true;
     }
 
     const result = await organizationService.getAllOrganizations(query);
@@ -205,6 +201,33 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<v
     res.status(400).json({
       success: false,
       message: error.message || "Error deactivating organization",
+    });
+  }
+};
+
+export const deleteOrganizationPermanently = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const deletedBy = (req.user as any)?._id?.toString();
+
+    if (!deletedBy) {
+      res.status(401).json({
+        success: false,
+        message: "Unauthorized. Admin user not found.",
+      });
+      return;
+    }
+
+    await organizationService.deleteOrganizationPermanently(id as string);
+
+    res.status(200).json({
+      success: true,
+      message: "Organization deleted permanently",
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Error deleting organization",
     });
   }
 };
