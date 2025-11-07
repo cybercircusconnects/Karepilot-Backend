@@ -8,9 +8,18 @@ export const getAllOrganizations = async (req: Request, res: Response): Promise<
     if (req.query.limit) query.limit = parseInt(req.query.limit as string);
     if (req.query.search) query.search = req.query.search as string;
     if (req.query.name) query.name = req.query.name as string;
-    if (req.query.organizationType) query.organizationType = req.query.organizationType as string;
+    if (req.query.organizationType) {
+      query.organizationType = req.query.organizationType as string;
+    }
     if (req.query.isActive !== undefined) {
-      query.isActive = req.query.isActive === 'true' || req.query.isActive === true;
+      const isActiveValue = req.query.isActive;
+      if (typeof isActiveValue === 'string') {
+        query.isActive = isActiveValue.toLowerCase() === 'true';
+      } else if (typeof isActiveValue === 'boolean') {
+        query.isActive = isActiveValue;
+      } else {
+        query.isActive = true;
+      }
     } else {
       query.isActive = true;
     }
@@ -103,18 +112,18 @@ export const createOrganization = async (req: Request, res: Response): Promise<v
       message: "Organization created successfully",
       data: {
         organization: {
-          id: result._id,
-          organizationType: result.organizationType,
-          name: result.name,
-          email: result.email,
-          phone: result.phone,
-          country: result.country,
-          city: result.city,
-          timezone: result.timezone,
-          address: result.address,
-          venueTemplate: result.venueTemplate,
-          isActive: result.isActive,
-          createdBy: result.createdBy,
+          id: result?._id,
+          organizationType: result?.organizationType,
+          name: result?.name,
+          email: result?.email,
+          phone: result?.phone,
+          country: result?.country,
+          city: result?.city,
+          timezone: result?.timezone,
+          address: result?.address,
+          venueTemplate: result?.venueTemplate,
+          isActive: result?.isActive,
+          createdBy: result?.createdBy,
         },
       },
     });
