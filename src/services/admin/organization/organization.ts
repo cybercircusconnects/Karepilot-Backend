@@ -14,11 +14,17 @@ export class OrganizationService {
     if (query.name) {
       dbQuery.name = { $regex: new RegExp(`^${query.name}$`, "i") };
     } else if (query.search) {
+      const searchRegex = new RegExp(query.search, "i");
+
       dbQuery.$or = [
-        { name: { $regex: query.search, $options: "i" } },
-        { email: { $regex: query.search, $options: "i" } },
-        { city: { $regex: query.search, $options: "i" } },
-        { country: { $regex: query.search, $options: "i" } },
+        { name: { $regex: searchRegex } },
+        { email: { $regex: searchRegex } },
+        { city: { $regex: searchRegex } },
+        { country: { $regex: searchRegex } },
+        { address: { $regex: searchRegex } },
+        { organizationType: { $regex: searchRegex } },
+        { phone: { $regex: searchRegex } },
+        { timezone: { $regex: searchRegex } },
       ];
     }
 
