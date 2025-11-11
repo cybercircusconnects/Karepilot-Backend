@@ -59,7 +59,7 @@ export interface PointOfInterestQuery {
   limit?: number;
   search?: string;
   category?: string;
-  status?: PointOfInterestStatus;
+  status?: PointOfInterestStatus | PointOfInterestStatus[];
   building?: string;
   floor?: string;
   organizationId?: string;

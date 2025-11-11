@@ -21,8 +21,13 @@ export class PointOfInterestService {
       dbQuery.category = { $regex: new RegExp(query.category, "i") };
     }
 
-    if (query.status) {
-      dbQuery.status = query.status;
+    if (query.status && Array.isArray(query.status) && query.status.length > 0) {
+      const statuses = query.status.filter(Boolean);
+      if (statuses.length > 0) {
+        dbQuery.status = { $in: statuses };
+      }
+    } else if (typeof query.status === "string" && query.status.trim()) {
+      dbQuery.status = query.status.trim();
     }
 
     if (query.building) {

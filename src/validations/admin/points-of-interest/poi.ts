@@ -74,8 +74,15 @@ export const pointOfInterestQuerySchema = Joi.object({
   limit: Joi.number().integer().min(1).max(100).optional().default(10),
   search: Joi.string().trim().optional(),
   category: Joi.string().trim().optional(),
-  status: Joi.string()
-    .valid(...Object.values(PointOfInterestStatus))
+  status: Joi.alternatives()
+    .try(
+      Joi.string()
+        .valid(...Object.values(PointOfInterestStatus))
+        .trim(),
+      Joi.array()
+        .items(Joi.string().valid(...Object.values(PointOfInterestStatus)))
+        .min(1),
+    )
     .optional(),
   building: Joi.string().trim().optional(),
   floor: Joi.string().trim().optional(),
