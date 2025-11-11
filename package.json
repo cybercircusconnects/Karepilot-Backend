@@ -20,7 +20,8 @@
     "seed:user-roles": "tsx src/seeders/user-management/roles.seeder.ts",
     "seed:user-departments": "tsx src/seeders/user-management/departments.seeder.ts",
     "seed:organization": "tsx src/seeders/organization/index.ts",
-    "seed:venue-templates": "tsx src/seeders/organization/venueTemplate.seeder.ts"
+    "seed:venue-templates": "tsx src/seeders/organization/venueTemplate.seeder.ts",
+    "seed:poi": "tsx src/seeders/points-of-interest/index.ts"
   },
   "keywords": [
     "mobile-app",

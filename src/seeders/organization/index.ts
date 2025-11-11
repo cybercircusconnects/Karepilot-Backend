@@ -11,7 +11,7 @@ const runOrganizationSeeders = async () => {
     console.log("\n🏢 Seeding organizations...");
     await seedOrganizations();
 
-    console.log("\n✅ All Organization seeders completed successfully!");
+    console.log("\n✅ Organization seeders completed successfully!");
   } catch (error: any) {
     console.error("❌ Error running Organization seeders:", error.message);
     throw error;

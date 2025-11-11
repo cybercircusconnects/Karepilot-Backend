@@ -1,6 +1,7 @@
 import dbConnect from "../config/dbConnect";
 import runUserManagementSeeders from "./user-management/index";
 import runOrganizationSeeders from "./organization/index";
+import runPointOfInterestSeeders from "./points-of-interest";
 
 const runAllSeeders = async () => {
   try {
@@ -15,6 +16,10 @@ const runAllSeeders = async () => {
 
     console.log("🏢 Running Organization seeders...");
     await runOrganizationSeeders();
+    console.log("");
+
+    console.log("📍 Running Points of Interest seeders...");
+    await runPointOfInterestSeeders();
 
     console.log("\n✅ All seeders completed successfully!");
     process.exit(0);
