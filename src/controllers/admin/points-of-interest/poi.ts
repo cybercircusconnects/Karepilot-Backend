@@ -69,6 +69,7 @@ export const getAllPointsOfInterest = async (req: Request, res: Response): Promi
       data: {
         pointsOfInterest: result.pointsOfInterest.map(serializePointOfInterest),
         pagination: result.pagination,
+        stats: result.stats,
       },
     });
   } catch (error: any) {

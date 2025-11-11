@@ -65,3 +65,10 @@ export interface PointOfInterestQuery {
   organizationId?: string;
   isActive?: boolean;
 }
+
+export interface PointOfInterestListStats {
+  total: number;
+  active: number;
+  categories: number;
+  accessible: number;
+}

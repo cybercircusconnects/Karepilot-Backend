@@ -78,7 +78,7 @@ export class PointOfInterestService {
 
     const dbQuery = this.buildPointOfInterestQuery(query);
 
-    const [pointsOfInterest, total] = await Promise.all([
+    const [pointsOfInterest, total, statsAggregation] = await Promise.all([
       PointOfInterest.find(dbQuery)
         .populate("organization", "name organizationType")
         .populate("createdBy", "firstName lastName email")
@@ -87,7 +87,46 @@ export class PointOfInterestService {
         .skip(skip)
         .limit(limit),
       PointOfInterest.countDocuments(dbQuery),
+      PointOfInterest.aggregate([
+        { $match: dbQuery },
+        {
+          $group: {
+            _id: null,
+            active: {
+              $sum: {
+                $cond: [{ $eq: ["$status", PointOfInterestStatus.ACTIVE] }, 1, 0],
+              },
+            },
+            categories: { $addToSet: "$category" },
+            accessible: {
+              $sum: {
+                $cond: [
+                  {
+                    $or: [
+                      { $eq: ["$accessibility.wheelchairAccessible", true] },
+                      { $eq: ["$accessibility.hearingLoop", true] },
+                      { $eq: ["$accessibility.visualAidSupport", true] },
+                    ],
+                  },
+                  1,
+                  0,
+                ],
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            active: 1,
+            accessible: 1,
+            categories: { $size: "$categories" },
+          },
+        },
+      ]),
     ]);
+
+    const statsData = statsAggregation[0] ?? { active: 0, categories: 0, accessible: 0 };
 
     return {
       pointsOfInterest,
@@ -96,6 +135,12 @@ export class PointOfInterestService {
         pages: Math.ceil(total / limit),
         total,
         limit,
+      },
+      stats: {
+        total,
+        active: statsData.active ?? 0,
+        categories: statsData.categories ?? 0,
+        accessible: statsData.accessible ?? 0,
       },
     };
   }
