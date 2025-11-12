@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, HydratedDocument } from "mongoose";
 import Organization from "../organization/organization";
 import AdminUser from "../user-management/users";
 import { MapLayerType } from "./enums";
@@ -66,6 +66,23 @@ const retentionPolicySchema = new Schema(
   { _id: false },
 );
 
+const DEFAULT_LAYER_VISIBILITY: Partial<Record<MapLayerType, boolean>> = {
+  [MapLayerType.FLOOR_PLAN]: true,
+  [MapLayerType.POI]: true,
+  [MapLayerType.PATH]: true,
+  [MapLayerType.ZONE]: true,
+  [MapLayerType.LABEL]: true,
+  [MapLayerType.ENTRANCE]: true,
+  [MapLayerType.ELEVATOR]: true,
+  [MapLayerType.RESTRICTED_ZONE]: true,
+  [MapLayerType.TAG]: true,
+  [MapLayerType.RULER]: false,
+  [MapLayerType.MEASUREMENT]: false,
+  [MapLayerType.ANNOTATION]: true,
+  [MapLayerType.MESSAGE]: true,
+  [MapLayerType.MEDIA]: false,
+};
+
 const mapManagerSettingsSchema = new Schema<IMapManagerSettings>(
   {
     organization: {
@@ -128,26 +145,10 @@ const mapManagerSettingsSchema = new Schema<IMapManagerSettings>(
       max: [500, "Maximum upload size cannot exceed 500MB"],
     },
     defaultLayerVisibility: {
-      type: Map,
+      type: Schema.Types.Map,
       of: Boolean,
-      default: () =>
-        new Map([
-          [MapLayerType.FLOOR_PLAN, true],
-          [MapLayerType.POI, true],
-          [MapLayerType.PATH, true],
-          [MapLayerType.ZONE, true],
-          [MapLayerType.LABEL, true],
-          [MapLayerType.ENTRANCE, true],
-          [MapLayerType.ELEVATOR, true],
-          [MapLayerType.RESTRICTED_ZONE, true],
-          [MapLayerType.TAG, true],
-          [MapLayerType.RULER, false],
-          [MapLayerType.MEASUREMENT, false],
-          [MapLayerType.ANNOTATION, true],
-          [MapLayerType.MESSAGE, true],
-          [MapLayerType.MEDIA, false],
-        ]),
-    },
+      default: () => ({ ...DEFAULT_LAYER_VISIBILITY }),
+    } as any,
     notificationPreferences: {
       type: notificationPreferencesSchema,
       default: () => ({}),
@@ -172,30 +173,33 @@ const mapManagerSettingsSchema = new Schema<IMapManagerSettings>(
   },
 );
 
-mapManagerSettingsSchema.pre("save", async function (next) {
-  if (this.isModified("organization")) {
-    const organization = await Organization.findById(this.organization);
-    if (!organization) {
-      return next(new Error("Organization not found"));
+mapManagerSettingsSchema.pre(
+  "save",
+  async function (this: HydratedDocument<IMapManagerSettings>, next) {
+    if (this.isModified("organization")) {
+      const organization = await Organization.findById(this.organization);
+      if (!organization) {
+        return next(new Error("Organization not found"));
+      }
     }
-  }
 
-  if (this.isModified("createdBy") && this.createdBy) {
-    const createdByUser = await AdminUser.findById(this.createdBy);
-    if (!createdByUser) {
-      return next(new Error("Created by user not found"));
+    if (this.isModified("createdBy") && this.createdBy) {
+      const createdByUser = await AdminUser.findById(this.createdBy);
+      if (!createdByUser) {
+        return next(new Error("Created by user not found"));
+      }
     }
-  }
 
-  if (this.isModified("updatedBy") && this.updatedBy) {
-    const updatedByUser = await AdminUser.findById(this.updatedBy);
-    if (!updatedByUser) {
-      return next(new Error("Updated by user not found"));
+    if (this.isModified("updatedBy") && this.updatedBy) {
+      const updatedByUser = await AdminUser.findById(this.updatedBy);
+      if (!updatedByUser) {
+        return next(new Error("Updated by user not found"));
+      }
     }
-  }
 
-  next();
-});
+    next();
+  },
+);
 
 mapManagerSettingsSchema.pre(["updateOne", "findOneAndUpdate"], async function (next) {
   const update = this.getUpdate() as any;
@@ -224,7 +228,9 @@ mapManagerSettingsSchema.pre(["updateOne", "findOneAndUpdate"], async function (
   next();
 });
 
-const MapManagerSettings = mongoose.model<IMapManagerSettings>("MapManagerSettings", mapManagerSettingsSchema);
+const MapManagerSettings = mongoose.model<IMapManagerSettings>(
+  "MapManagerSettings",
+  mapManagerSettingsSchema,
+);
 
 export default MapManagerSettings;
-
