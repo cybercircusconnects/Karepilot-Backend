@@ -21,7 +21,8 @@
     "seed:user-departments": "tsx src/seeders/user-management/departments.seeder.ts",
     "seed:organization": "tsx src/seeders/organization/index.ts",
     "seed:venue-templates": "tsx src/seeders/organization/venueTemplate.seeder.ts",
-    "seed:poi": "tsx src/seeders/points-of-interest/index.ts"
+    "seed:poi": "tsx src/seeders/points-of-interest/index.ts",
+    "seed:map-manager": "tsx src/seeders/map-manager/index.ts"
   },
   "keywords": [
     "mobile-app",

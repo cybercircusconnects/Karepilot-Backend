@@ -5,6 +5,7 @@ import userManagementRouter from "./user-management";
 import adminSettingsRouter from "./settings";
 import organizationRouter from "./organization";
 import pointsOfInterestRouter from "./points-of-interest";
+import mapManagerRouter from "./map-manager";
 
 const adminRouter = Router();
 
@@ -19,5 +20,7 @@ adminRouter.use("/settings", adminSettingsRouter);
 adminRouter.use("/organization", organizationRouter);
 
 adminRouter.use("/points-of-interest", pointsOfInterestRouter);
+
+adminRouter.use("/map-manager", mapManagerRouter);
 
 export default adminRouter;
