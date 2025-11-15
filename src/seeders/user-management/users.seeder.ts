@@ -10,9 +10,11 @@ const seedUsers = async () => {
     }
 
     const departments = await Department.find({ isActive: true });
-    const departmentMap = new Map(
-      departments.map((dept) => [dept.name.toLowerCase(), dept._id])
-    );
+    const departmentMap = new Map<string, mongoose.Types.ObjectId>();
+    departments.forEach((dept) => {
+      const normalizedName = dept.name.trim().toLowerCase();
+      departmentMap.set(normalizedName, dept._id as mongoose.Types.ObjectId);
+    });
 
     const usersToSeed = [
       {
@@ -89,9 +91,10 @@ const seedUsers = async () => {
         continue;
       }
 
-      let departmentId = null;
+      let departmentId: mongoose.Types.ObjectId | null = null;
       if (userData.departmentName) {
-        const deptId = departmentMap.get(userData.departmentName.toLowerCase());
+        const normalizedDeptName = userData.departmentName.trim().toLowerCase();
+        const deptId = departmentMap.get(normalizedDeptName);
         if (!deptId) {
           console.warn(`⚠️  Department "${userData.departmentName}" not found for user ${userData.email}`);
         } else {
