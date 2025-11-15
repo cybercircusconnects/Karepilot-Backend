@@ -6,26 +6,21 @@ import { MapFloorPlanStatus } from "../../../types/admin/map-management";
 
 export const getFloorPlans = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Normalize query parameters
     const normalizedQuery: any = { ...req.query };
 
-    // Map 'building' to 'buildingId' (frontend sends 'building', backend expects 'buildingId')
     if (normalizedQuery.building && !normalizedQuery.buildingId) {
       normalizedQuery.buildingId = normalizedQuery.building;
       delete normalizedQuery.building;
     }
 
-    // Normalize status: capitalize first letter (frontend sends lowercase, backend expects capitalized)
     if (normalizedQuery.status) {
       const statusValue = normalizedQuery.status as string;
       if (typeof statusValue === "string" && statusValue.length > 0) {
-        // Capitalize first letter: "draft" -> "Draft", "published" -> "Published"
         normalizedQuery.status =
           statusValue.charAt(0).toUpperCase() + statusValue.slice(1).toLowerCase();
       }
     }
 
-    // Convert page and limit to numbers if they exist
     if (normalizedQuery.page) {
       normalizedQuery.page = parseInt(normalizedQuery.page as string, 10) || 1;
     }

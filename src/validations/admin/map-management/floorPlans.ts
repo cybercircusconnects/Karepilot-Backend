@@ -94,7 +94,7 @@ export const floorPlanStatusSchema = Joi.object({
 export const floorPlanQuerySchema = Joi.object({
   organizationId: objectIdRule.optional(),
   buildingId: objectIdRule.optional(),
-  building: objectIdRule.optional(), // Accept 'building' as alternative to 'buildingId' (frontend sends 'building')
+  building: objectIdRule.optional(), 
   status: Joi.alternatives()
     .try(
       Joi.string()
@@ -102,7 +102,6 @@ export const floorPlanQuerySchema = Joi.object({
         .messages({
           "any.only": `Status must be one of: ${Object.values(MapFloorPlanStatus).join(", ")}`,
         }),
-      // Also accept lowercase status values (will be normalized in controller)
       Joi.string()
         .valid("draft", "published", "disabled", "archived")
         .messages({
