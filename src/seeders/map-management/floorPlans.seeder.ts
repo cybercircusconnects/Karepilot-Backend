@@ -17,14 +17,11 @@ interface FloorPlanSeedData {
   media?: {
     fileUrl?: string;
     fileKey?: string;
-    thumbnailUrl?: string;
-    thumbnailKey?: string;
   };
   metadata?: {
     scale?: string;
     description?: string;
     tags?: string[];
-    highlights?: string[];
   };
   isTemplate?: boolean;
   versionNotes?: string;
@@ -41,14 +38,11 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-main-building-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-main-building-ground-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "Ground floor with reception, main entrance, and administrative offices",
       tags: ["ground-floor", "reception", "main-entrance"],
-      highlights: ["Reception area", "Main entrance", "Administrative offices", "Emergency exits"],
     },
     versionNotes: "Initial floor plan upload - Ground floor layout with reception and administrative areas",
   },
@@ -62,14 +56,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-main-building-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-main-building-first-floor-thumb",
+ "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-main-building-first-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "First floor with patient rooms and nursing stations",
       tags: ["first-floor", "patient-rooms", "nursing"],
-      highlights: ["Patient rooms", "Nurse station", "Medication room"],
+ ["Patient rooms", "Nurse station", "Medication room"],
     },
     versionNotes: "First floor patient care unit layout with 24 patient rooms and central nursing station",
   },
@@ -83,14 +77,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-main-building-second-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-main-building-second-floor-thumb",
+ "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-main-building-second-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "Second floor with surgical suites and recovery rooms",
       tags: ["second-floor", "surgery", "recovery"],
-      highlights: ["Operating rooms", "Recovery area", "Surgical prep"],
+ ["Operating rooms", "Recovery area", "Surgical prep"],
     },
     versionNotes: "Surgical floor with 6 operating rooms, recovery area, and surgical prep facilities",
   },
@@ -104,14 +98,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-main-building-third-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-main-building-third-floor-thumb",
+ "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-main-building-third-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "Third floor with specialty clinics",
       tags: ["third-floor", "clinics", "specialty"],
-      highlights: ["Cardiology clinic", "Orthopedics", "Pediatrics"],
+ ["Cardiology clinic", "Orthopedics", "Pediatrics"],
     },
     versionNotes: "Draft version - Specialty clinics floor plan under review. Includes cardiology, orthopedics, and pediatrics departments",
   },
@@ -125,14 +119,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-emergency-wing-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-emergency-wing-ground-floor-thumb",
+ "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-emergency-wing-ground-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "Emergency department ground floor with triage and trauma bays",
       tags: ["emergency", "triage", "trauma"],
-      highlights: ["Triage area", "Trauma bays", "Emergency entrance"],
+ ["Triage area", "Trauma bays", "Emergency entrance"],
     },
     versionNotes: "Emergency department ground floor with 4 trauma bays, triage area, and ambulance bay access",
   },
@@ -146,14 +140,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-emergency-wing-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-emergency-wing-first-floor-thumb",
+ "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-emergency-wing-first-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "First floor with observation rooms and emergency patient care",
       tags: ["emergency", "observation", "patient-care"],
-      highlights: ["Observation rooms", "Patient care units", "Nurse station"],
+ ["Observation rooms", "Patient care units", "Nurse station"],
     },
     versionNotes: "Emergency observation unit with 12 observation rooms and dedicated nursing station",
   },
@@ -167,14 +161,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-emergency-wing-second-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-emergency-wing-second-floor-thumb",
+ "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-emergency-wing-second-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "Second floor with emergency surgical suites",
       tags: ["emergency", "surgery", "operating"],
-      highlights: ["Emergency OR", "Recovery area"],
+ ["Emergency OR", "Recovery area"],
     },
     versionNotes: "Draft - Emergency surgical floor with 2 emergency operating rooms and recovery area. Pending final approval",
   },
@@ -188,14 +182,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-diagnostic-center-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-diagnostic-center-ground-floor-thumb",
+ "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-diagnostic-center-ground-floor-thumb",
     },
     metadata: {
       scale: "1:75",
       description: "Ground floor with imaging facilities and waiting areas",
       tags: ["diagnostic", "imaging", "radiology"],
-      highlights: ["MRI suite", "CT scan room", "X-ray room", "Waiting area"],
+ ["MRI suite", "CT scan room", "X-ray room", "Waiting area"],
     },
     versionNotes: "Diagnostic imaging floor with MRI suite, CT scanner, X-ray facilities, and patient waiting areas",
   },
@@ -209,14 +203,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/citycare-diagnostic-center-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/citycare-diagnostic-center-first-floor-thumb",
+ "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/citycare-diagnostic-center-first-floor-thumb",
     },
     metadata: {
       scale: "1:75",
       description: "First floor with laboratories and testing facilities",
       tags: ["diagnostic", "laboratory", "testing"],
-      highlights: ["Lab facilities", "Blood work area", "Specimen collection"],
+ ["Lab facilities", "Blood work area", "Specimen collection"],
     },
     versionNotes: "Laboratory floor with clinical lab, blood work stations, and specimen collection area",
   },
@@ -230,14 +224,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/lakeside-main-hospital-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/lakeside-main-hospital-ground-floor-thumb",
+ "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/lakeside-main-hospital-ground-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "Main hospital building ground floor",
       tags: ["ground-floor", "hospital", "main"],
-      highlights: ["Main entrance", "Reception", "Emergency exits"],
+ ["Main entrance", "Reception", "Emergency exits"],
     },
     versionNotes: "Main hospital building ground floor with reception, main entrance, and administrative services",
   },
@@ -251,14 +245,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/lakeside-main-hospital-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/lakeside-main-hospital-first-floor-thumb",
+ "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/lakeside-main-hospital-first-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "First floor with patient care units",
       tags: ["first-floor", "patient-care"],
-      highlights: ["Patient rooms", "Nurse stations"],
+ ["Patient rooms", "Nurse stations"],
     },
     versionNotes: "Patient care unit with 20 patient rooms and 2 nursing stations",
   },
@@ -272,14 +266,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/2405261/pexels-photo-2405261.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/skyways-terminal1-departure-level",
-      thumbnailUrl: "https://images.pexels.com/photos/2405261/pexels-photo-2405261.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/skyways-terminal1-departure-level-thumb",
+ "https://images.pexels.com/photos/2405261/pexels-photo-2405261.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/skyways-terminal1-departure-level-thumb",
     },
     metadata: {
       scale: "1:200",
       description: "Terminal 1 departure level with check-in counters and security",
       tags: ["terminal", "departure", "check-in"],
-      highlights: ["Check-in counters", "Security checkpoints", "Gates 1-20"],
+ ["Check-in counters", "Security checkpoints", "Gates 1-20"],
     },
     versionNotes: "Terminal 1 departure level with 40 check-in counters, security checkpoints, and gates 1-20",
   },
@@ -293,14 +287,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/2405262/pexels-photo-2405262.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/skyways-terminal1-arrival-level",
-      thumbnailUrl: "https://images.pexels.com/photos/2405262/pexels-photo-2405262.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/skyways-terminal1-arrival-level-thumb",
+ "https://images.pexels.com/photos/2405262/pexels-photo-2405262.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/skyways-terminal1-arrival-level-thumb",
     },
     metadata: {
       scale: "1:200",
       description: "Terminal 1 arrival level with baggage claim and customs",
       tags: ["terminal", "arrival", "baggage"],
-      highlights: ["Baggage claim", "Customs area", "Arrival gates"],
+ ["Baggage claim", "Customs area", "Arrival gates"],
     },
     versionNotes: "Terminal 1 arrival level with 4 baggage carousels, customs area, and arrival gates",
   },
@@ -314,14 +308,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/2405263/pexels-photo-2405263.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/skyways-terminal2-international-departures",
-      thumbnailUrl: "https://images.pexels.com/photos/2405263/pexels-photo-2405263.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/skyways-terminal2-international-departures-thumb",
+ "https://images.pexels.com/photos/2405263/pexels-photo-2405263.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/skyways-terminal2-international-departures-thumb",
     },
     metadata: {
       scale: "1:200",
       description: "Terminal 2 international departures with duty-free and lounges",
       tags: ["terminal", "international", "departures"],
-      highlights: ["Duty-free shops", "VIP lounges", "International gates"],
+ ["Duty-free shops", "VIP lounges", "International gates"],
     },
     versionNotes: "Terminal 2 international departures with duty-free shopping, VIP lounges, and international gates 21-40",
   },
@@ -335,14 +329,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/harborfront-north-wing-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/harborfront-north-wing-ground-floor-thumb",
+ "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/harborfront-north-wing-ground-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "North wing ground floor with retail stores",
       tags: ["retail", "shopping", "ground-floor"],
-      highlights: ["Retail stores", "Food court", "Main entrance"],
+ ["Retail stores", "Food court", "Main entrance"],
     },
     versionNotes: "North wing ground floor with 25 retail stores, food court with 12 vendors, and main entrance",
   },
@@ -356,14 +350,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/harborfront-north-wing-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/harborfront-north-wing-first-floor-thumb",
+ "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/harborfront-north-wing-first-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "North wing first floor with more retail and services",
       tags: ["retail", "shopping", "first-floor"],
-      highlights: ["More retail stores", "Customer service", "Restrooms"],
+ ["More retail stores", "Customer service", "Restrooms"],
     },
     versionNotes: "North wing first floor with additional retail stores, customer service desk, and restroom facilities",
   },
@@ -377,14 +371,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/aurora-mall-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/aurora-mall-ground-floor-thumb",
+ "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/aurora-mall-ground-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "Main mall building ground floor",
       tags: ["mall", "shopping", "ground-floor"],
-      highlights: ["Main entrance", "Retail stores", "Food court"],
+ ["Main entrance", "Retail stores", "Food court"],
     },
     versionNotes: "Main mall building ground floor with main entrance, 30 retail stores, and central food court",
   },
@@ -398,14 +392,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/aurora-mall-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/aurora-mall-first-floor-thumb",
+ "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/aurora-mall-first-floor-thumb",
     },
     metadata: {
       scale: "1:150",
       description: "First floor with entertainment and dining",
       tags: ["mall", "entertainment", "dining"],
-      highlights: ["Cinema", "Restaurants", "Entertainment area"],
+ ["Cinema", "Restaurants", "Entertainment area"],
     },
     versionNotes: "First floor with 8-screen cinema complex, 6 restaurants, and entertainment area",
   },
@@ -419,14 +413,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/greenfield-innovation-hub-ground-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/greenfield-innovation-hub-ground-floor-thumb",
+ "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/greenfield-innovation-hub-ground-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "Innovation hub ground floor with offices and meeting spaces",
       tags: ["innovation", "offices", "meetings"],
-      highlights: ["Main lobby", "Meeting rooms", "Office spaces"],
+ ["Main lobby", "Meeting rooms", "Office spaces"],
     },
     versionNotes: "Innovation hub ground floor with main lobby, 8 meeting rooms, and 15 office spaces",
   },
@@ -440,14 +434,14 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     media: {
       fileUrl: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1200",
       fileKey: "floor-plans/greenfield-innovation-hub-first-floor",
-      thumbnailUrl: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=400",
-      thumbnailKey: "floor-plans/thumbnails/greenfield-innovation-hub-first-floor-thumb",
+ "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=400",
+ "floor-plans/thumbnails/greenfield-innovation-hub-first-floor-thumb",
     },
     metadata: {
       scale: "1:100",
       description: "First floor with collaborative workspaces",
       tags: ["innovation", "workspaces", "collaboration"],
-      highlights: ["Collaborative spaces", "Conference rooms", "Break areas"],
+ ["Collaborative spaces", "Conference rooms", "Break areas"],
     },
     versionNotes: "First floor with open collaborative workspaces, 4 conference rooms, and break areas",
   },
@@ -551,14 +545,11 @@ const seedFloorPlans = async () => {
         media: {
           fileUrl: floorPlanData.media?.fileUrl || null,
           fileKey: floorPlanData.media?.fileKey || null,
-          thumbnailUrl: floorPlanData.media?.thumbnailUrl || null,
-          thumbnailKey: floorPlanData.media?.thumbnailKey || null,
         },
         metadata: {
           scale: floorPlanData.metadata?.scale || null,
           description: floorPlanData.metadata?.description || null,
           tags: floorPlanData.metadata?.tags || [],
-          highlights: floorPlanData.metadata?.highlights || [],
         },
         version: 1,
         versionNotes: floorPlanData.versionNotes || null,

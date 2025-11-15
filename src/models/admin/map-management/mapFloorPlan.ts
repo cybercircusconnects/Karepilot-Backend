@@ -16,14 +16,11 @@ export interface IMapFloorPlan extends Document {
   media: {
     fileUrl?: string | null; 
     fileKey?: string | null; 
-    thumbnailUrl?: string | null; 
-    thumbnailKey?: string | null; 
   };
   metadata: {
     scale?: string | null;
     description?: string | null;
     tags: string[];
-    highlights: string[];
   };
   version: number;
   versionNotes?: string | null;
@@ -78,17 +75,11 @@ const mapFloorPlanSchema = new Schema<IMapFloorPlan>(
     media: {
       fileUrl: { type: String, default: null },
       fileKey: { type: String, default: null },
-      thumbnailUrl: { type: String, default: null },
-      thumbnailKey: { type: String, default: null },
     },
     metadata: {
       scale: { type: String, default: null, trim: true },
       description: { type: String, default: null, trim: true, maxlength: 2000 },
       tags: {
-        type: [String],
-        default: [],
-      },
-      highlights: {
         type: [String],
         default: [],
       },

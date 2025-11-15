@@ -35,15 +35,12 @@ const sanitizeStringArray = (values?: string[]): string[] => {
 const buildMediaObject = (media?: MapFloorPlanMedia) => ({
   fileUrl: media?.fileUrl ?? null,
   fileKey: media?.fileKey ?? null,
-  thumbnailUrl: media?.thumbnailUrl ?? null,
-  thumbnailKey: media?.thumbnailKey ?? null,
 });
 
 const buildMetadataObject = (metadata?: MapFloorPlanMetadata) => ({
   scale: metadata?.scale ?? null,
   description: metadata?.description ?? null,
   tags: sanitizeStringArray(metadata?.tags),
-  highlights: sanitizeStringArray(metadata?.highlights),
 });
 
 const toObjectId = (value?: string | null): Types.ObjectId | null => {
@@ -98,7 +95,6 @@ class MapFloorPlanService {
         { versionNotes: { $regex: searchRegex } },
         { "metadata.description": { $regex: searchRegex } },
         { "metadata.tags": { $elemMatch: { $regex: searchRegex } } },
-        { "metadata.highlights": { $elemMatch: { $regex: searchRegex } } },
       ];
     }
 
@@ -127,13 +123,10 @@ class MapFloorPlanService {
         scale: plain.metadata?.scale ?? null,
         description: plain.metadata?.description ?? null,
         tags: Array.isArray(plain.metadata?.tags) ? plain.metadata.tags : [],
-        highlights: Array.isArray(plain.metadata?.highlights) ? plain.metadata.highlights : [],
       },
       media: {
         fileUrl: plain.media?.fileUrl ?? null,
         fileKey: plain.media?.fileKey ?? null,
-        thumbnailUrl: plain.media?.thumbnailUrl ?? null,
-        thumbnailKey: plain.media?.thumbnailKey ?? null,
       },
       version: plain.version ?? 1,
       versionNotes: plain.versionNotes ?? null,

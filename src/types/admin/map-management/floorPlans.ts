@@ -8,15 +8,12 @@ export enum MapFloorPlanStatus {
 export interface MapFloorPlanMedia {
   fileUrl?: string | null; 
   fileKey?: string | null; 
-  thumbnailUrl?: string | null;
-  thumbnailKey?: string | null; 
 }
 
 export interface MapFloorPlanMetadata {
   scale?: string | null;
   description?: string | null;
   tags?: string[];
-  highlights?: string[];
 }
 
 export interface CreateMapFloorPlanPayload {

@@ -10,19 +10,12 @@ const mediaSchema = Joi.object({
   fileKey: Joi.string().trim().optional().allow(null, "").messages({
     "string.base": "File key must be a string (publicId from upload service)",
   }),
-  thumbnailUrl: Joi.string().uri().optional().allow(null, "").messages({
-    "string.uri": "Thumbnail URL must be a valid URI from the upload service",
-  }),
-  thumbnailKey: Joi.string().trim().optional().allow(null, "").messages({
-    "string.base": "Thumbnail key must be a string (publicId from upload service)",
-  }),
 }).optional();
 
 const metadataSchema = Joi.object({
   scale: Joi.string().trim().max(50).optional().allow(null, ""),
   description: Joi.string().trim().max(2000).optional().allow(null, ""),
   tags: Joi.array().items(Joi.string().trim().max(40)).optional(),
-  highlights: Joi.array().items(Joi.string().trim().max(80)).optional(),
 }).optional();
 
 export const createFloorPlanSchema = Joi.object({
