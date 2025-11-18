@@ -10,6 +10,8 @@ import {
   VerificationResponse,
   IMobileUser,
   MobileUserStatus,
+  UpdateUserSettingsData,
+  UserSettings,
 } from "../../types/mobile/mobileUser";
 
 export class MobileUserService {
@@ -179,6 +181,86 @@ export class MobileUserService {
 
     mobileUser.password = newPassword;
     await mobileUser.save();
+  }
+
+  async getUserSettings(id: string): Promise<UserSettings> {
+    const mobileUser = await MobileUser.findById(id).select("settings");
+    if (!mobileUser) {
+      throw new Error("Mobile user not found");
+    }
+
+    return mobileUser.settings || {
+      navigationPreferences: {
+        stepFreeRouteOnly: false,
+        largeTouchTargets: false,
+      },
+      languageAndVoice: {
+        displayLanguage: "English",
+        voiceGuidance: false,
+      },
+      accessibility: {
+        voiceNavigation: false,
+        stepRoutesOnly: false,
+        largeTextMode: false,
+      },
+    };
+  }
+
+  async updateUserSettings(
+    id: string,
+    data: UpdateUserSettingsData,
+  ): Promise<UserSettings> {
+    const mobileUser = await MobileUser.findById(id);
+    if (!mobileUser) {
+      throw new Error("Mobile user not found");
+    }
+
+    // Initialize settings if they don't exist
+    if (!mobileUser.settings) {
+      mobileUser.settings = {
+        navigationPreferences: {
+          stepFreeRouteOnly: false,
+          largeTouchTargets: false,
+        },
+        languageAndVoice: {
+          displayLanguage: "English",
+          voiceGuidance: false,
+        },
+        accessibility: {
+          voiceNavigation: false,
+          stepRoutesOnly: false,
+          largeTextMode: false,
+        },
+      };
+    }
+
+    // Update navigation preferences
+    if (data.navigationPreferences) {
+      mobileUser.settings.navigationPreferences = {
+        ...mobileUser.settings.navigationPreferences,
+        ...data.navigationPreferences,
+      };
+    }
+
+    // Update language and voice
+    if (data.languageAndVoice) {
+      mobileUser.settings.languageAndVoice = {
+        ...mobileUser.settings.languageAndVoice,
+        ...data.languageAndVoice,
+      };
+    }
+
+    // Update accessibility
+    if (data.accessibility) {
+      mobileUser.settings.accessibility = {
+        ...mobileUser.settings.accessibility,
+        ...data.accessibility,
+      };
+    }
+
+    await mobileUser.save();
+
+    return mobileUser.settings;
   }
 }
 

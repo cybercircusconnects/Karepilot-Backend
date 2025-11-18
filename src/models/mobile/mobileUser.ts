@@ -48,6 +48,60 @@ const mobileUserSchema = new Schema<IMobileUser>(
     lastLogin: {
       type: Date,
     },
+    settings: {
+      type: {
+        navigationPreferences: {
+          stepFreeRouteOnly: {
+            type: Boolean,
+            default: false,
+          },
+          largeTouchTargets: {
+            type: Boolean,
+            default: false,
+          },
+        },
+        languageAndVoice: {
+          displayLanguage: {
+            type: String,
+            default: "English",
+            trim: true,
+          },
+          voiceGuidance: {
+            type: Boolean,
+            default: false,
+          },
+        },
+        accessibility: {
+          voiceNavigation: {
+            type: Boolean,
+            default: false,
+          },
+          stepRoutesOnly: {
+            type: Boolean,
+            default: false,
+          },
+          largeTextMode: {
+            type: Boolean,
+            default: false,
+          },
+        },
+      },
+      default: {
+        navigationPreferences: {
+          stepFreeRouteOnly: false,
+          largeTouchTargets: false,
+        },
+        languageAndVoice: {
+          displayLanguage: "English",
+          voiceGuidance: false,
+        },
+        accessibility: {
+          voiceNavigation: false,
+          stepRoutesOnly: false,
+          largeTextMode: false,
+        },
+      },
+    },
   },
   {
     timestamps: true,

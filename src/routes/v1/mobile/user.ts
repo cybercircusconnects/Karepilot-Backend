@@ -7,6 +7,8 @@ import {
   getMobileProfile,
   updateMobileProfile,
   changeMobilePassword,
+  getUserSettings,
+  updateUserSettings,
 } from "../../../controllers/mobile/mobileUser";
 import { authenticateMobile } from "../../../middlewares/auth";
 import {
@@ -16,6 +18,7 @@ import {
   mobilePasswordChangeSchema,
   emailVerificationSchema,
   resendVerificationSchema,
+  userSettingsSchema,
 } from "../../../validations/mobile/mobileUser";
 import { validate } from "../../../utils";
 
@@ -40,5 +43,9 @@ mobileRouter.get("/profile", getMobileProfile);
 mobileRouter.patch("/profile", validate(mobileUserUpdateSchema), updateMobileProfile);
 
 mobileRouter.put("/change-password", validate(mobilePasswordChangeSchema), changeMobilePassword);
+
+mobileRouter.get("/settings", getUserSettings);
+
+mobileRouter.patch("/settings", validate(userSettingsSchema), updateUserSettings);
 
 export default mobileRouter;

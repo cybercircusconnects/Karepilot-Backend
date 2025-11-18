@@ -109,3 +109,21 @@ export const resendVerificationSchema = Joi.object({
   email: emailSchema
 });
 
+export const userSettingsSchema = Joi.object({
+  navigationPreferences: Joi.object({
+    stepFreeRouteOnly: Joi.boolean().optional(),
+    largeTouchTargets: Joi.boolean().optional()
+  }).optional(),
+  languageAndVoice: Joi.object({
+    displayLanguage: Joi.string().trim().optional(),
+    voiceGuidance: Joi.boolean().optional()
+  }).optional(),
+  accessibility: Joi.object({
+    voiceNavigation: Joi.boolean().optional(),
+    stepRoutesOnly: Joi.boolean().optional(),
+    largeTextMode: Joi.boolean().optional()
+  }).optional()
+}).min(1).messages({
+  'object.min': 'At least one settings field must be provided'
+});
+

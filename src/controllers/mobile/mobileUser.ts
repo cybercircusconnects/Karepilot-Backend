@@ -94,6 +94,7 @@ export const loginMobileUser = async (req: Request, res: Response): Promise<void
           isEmailVerified: result.user.isEmailVerified,
           status: result.user.status,
           lastLogin: result.user.lastLogin,
+          settings: result.user.settings,
           createdAt: result.user.createdAt,
           updatedAt: result.user.updatedAt,
         },
@@ -124,6 +125,7 @@ export const getMobileProfile = async (req: Request, res: Response): Promise<voi
           isEmailVerified: mobileUser.isEmailVerified,
           profileImage: mobileUser.profileImage,
           lastLogin: mobileUser.lastLogin,
+          settings: mobileUser.settings,
           createdAt: mobileUser.createdAt,
           updatedAt: mobileUser.updatedAt,
         },
@@ -184,6 +186,48 @@ export const changeMobilePassword = async (req: Request, res: Response): Promise
     res.status(400).json({
       success: false,
       message: error.message || "Error changing password",
+    });
+  }
+};
+
+export const getUserSettings = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = (req as any).user.id;
+    const settings = await mobileUserService.getUserSettings(userId);
+
+    res.status(200).json({
+      success: true,
+      message: "User settings retrieved successfully",
+      data: {
+        settings,
+      },
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message || "Error retrieving user settings",
+    });
+  }
+};
+
+export const updateUserSettings = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = (req as any).user.id;
+    const updateData = req.body;
+
+    const settings = await mobileUserService.updateUserSettings(userId, updateData);
+
+    res.status(200).json({
+      success: true,
+      message: "User settings updated successfully",
+      data: {
+        settings,
+      },
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Error updating user settings",
     });
   }
 };

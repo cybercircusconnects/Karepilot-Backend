@@ -17,6 +17,7 @@ export interface IMobileUser extends Document {
   status: MobileUserStatus;
   profileImage?: string;
   lastLogin?: Date | undefined;
+  settings?: UserSettings;
   createdAt: Date;
   updatedAt: Date;
 
@@ -59,5 +60,33 @@ export interface MobileUserResponse {
 
 export interface VerificationResponse {
   email: string;
+}
+
+export interface NavigationPreferences {
+  stepFreeRouteOnly: boolean;
+  largeTouchTargets: boolean;
+}
+
+export interface LanguageAndVoice {
+  displayLanguage: string;
+  voiceGuidance: boolean;
+}
+
+export interface AccessibilitySettings {
+  voiceNavigation: boolean;
+  stepRoutesOnly: boolean;
+  largeTextMode: boolean;
+}
+
+export interface UserSettings {
+  navigationPreferences: NavigationPreferences;
+  languageAndVoice: LanguageAndVoice;
+  accessibility: AccessibilitySettings;
+}
+
+export interface UpdateUserSettingsData {
+  navigationPreferences?: Partial<NavigationPreferences>;
+  languageAndVoice?: Partial<LanguageAndVoice>;
+  accessibility?: Partial<AccessibilitySettings>;
 }
 
