@@ -36,7 +36,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg",
       fileKey: "floor-plans/citycare-main-building-ground-floor",
     },
     metadata: {
@@ -54,7 +54,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
       fileKey: "floor-plans/citycare-main-building-first-floor",
     },
     metadata: {
@@ -72,7 +72,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 2,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg",
       fileKey: "floor-plans/citycare-main-building-second-floor",
     },
     metadata: {
@@ -90,7 +90,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 3,
     status: MapFloorPlanStatus.DRAFT,
     media: {
-      fileUrl: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg",
       fileKey: "floor-plans/citycare-main-building-third-floor",
     },
     metadata: {
@@ -108,7 +108,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-ground-floor",
     },
     metadata: {
@@ -126,7 +126,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-first-floor",
     },
     metadata: {
@@ -144,7 +144,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 2,
     status: MapFloorPlanStatus.DRAFT,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-second-floor",
     },
     metadata: {
@@ -162,7 +162,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg",
       fileKey: "floor-plans/citycare-diagnostic-center-ground-floor",
     },
     metadata: {
@@ -180,7 +180,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg",
       fileKey: "floor-plans/citycare-diagnostic-center-first-floor",
     },
     metadata: {
@@ -198,7 +198,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg",
       fileKey: "floor-plans/lakeside-main-hospital-ground-floor",
     },
     metadata: {
@@ -216,7 +216,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg",
       fileKey: "floor-plans/lakeside-main-hospital-first-floor",
     },
     metadata: {
@@ -234,7 +234,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 2,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/2405261/pexels-photo-2405261.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/2405261/pexels-photo-2405261.jpeg",
       fileKey: "floor-plans/skyways-terminal1-departure-level",
     },
     metadata: {
@@ -252,7 +252,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/2405262/pexels-photo-2405262.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/2405262/pexels-photo-2405262.jpeg",
       fileKey: "floor-plans/skyways-terminal1-arrival-level",
     },
     metadata: {
@@ -270,7 +270,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 3,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/2405263/pexels-photo-2405263.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/2405263/pexels-photo-2405263.jpeg",
       fileKey: "floor-plans/skyways-terminal2-international-departures",
     },
     metadata: {
@@ -288,7 +288,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
       fileKey: "floor-plans/harborfront-north-wing-ground-floor",
     },
     metadata: {
@@ -306,7 +306,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg",
       fileKey: "floor-plans/harborfront-north-wing-first-floor",
     },
     metadata: {
@@ -324,7 +324,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg",
       fileKey: "floor-plans/aurora-mall-ground-floor",
     },
     metadata: {
@@ -342,7 +342,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg",
       fileKey: "floor-plans/aurora-mall-first-floor",
     },
     metadata: {
@@ -360,7 +360,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg",
       fileKey: "floor-plans/greenfield-innovation-hub-ground-floor",
     },
     metadata: {
@@ -378,7 +378,7 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
     media: {
-      fileUrl: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      fileUrl: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg",
       fileKey: "floor-plans/greenfield-innovation-hub-first-floor",
     },
     metadata: {
