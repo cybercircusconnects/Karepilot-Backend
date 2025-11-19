@@ -32,7 +32,6 @@ const getPOIColor = (category: string): string => {
   return colorMap[category] || "#6B7280";
 };
 
-// Template POIs for Ground Floor (floorNumber === 0 or null)
 const groundFloorPOITemplate: POITemplate[] = [
   {
     name: "Main Reception",
@@ -108,7 +107,6 @@ const groundFloorPOITemplate: POITemplate[] = [
   },
 ];
 
-// Template POIs for Upper Floors (floorNumber > 0)
 const upperFloorPOITemplate: POITemplate[] = [
   {
     name: "Room 101",
@@ -192,7 +190,6 @@ const upperFloorPOITemplate: POITemplate[] = [
   },
 ];
 
-// Get POI template based on floor number
 const getPOITemplate = (floorNumber: number | null | undefined): POITemplate[] => {
   if (floorNumber === 0 || floorNumber === null || floorNumber === undefined) {
     return groundFloorPOITemplate;
@@ -231,10 +228,8 @@ const seedMapEditorPOIs = async () => {
       const floorNumber = floorPlan.floorNumber;
       const floorPlanTitle = floorPlan.title;
 
-      // Get appropriate POI template based on floor number
       const poiTemplate = getPOITemplate(floorNumber);
 
-      // Check if this floor plan already has POIs
       const existingPOICount = await MapEditorPOI.countDocuments({
         floorPlan: floorPlanId,
       });
@@ -253,7 +248,6 @@ const seedMapEditorPOIs = async () => {
       console.log(`\n📍 Processing floor plan: "${floorPlanTitle}" (Floor ${floorNumber ?? "Ground"})`);
 
       for (const poiTemplateData of poiTemplate) {
-        // Check if POI already exists
         const existing = await MapEditorPOI.findOne({
           floorPlan: floorPlanId,
           name: poiTemplateData.name.trim(),
@@ -264,8 +258,7 @@ const seedMapEditorPOIs = async () => {
           continue;
         }
 
-        // Add some randomization to coordinates to avoid exact duplicates across floors
-        const coordinateOffset = Math.floor(Math.random() * 20) - 10; // -10 to +10
+        const coordinateOffset = Math.floor(Math.random() * 20) - 10; 
         const x = poiTemplateData.coordinates.x + coordinateOffset;
         const y = poiTemplateData.coordinates.y + coordinateOffset;
 
@@ -275,7 +268,7 @@ const seedMapEditorPOIs = async () => {
           category: poiTemplateData.category.trim(),
           description: poiTemplateData.description?.trim() || undefined,
           coordinates: {
-            x: Math.max(50, x), // Ensure minimum coordinates
+            x: Math.max(50, x), 
             y: Math.max(50, y),
           },
           icon: poiTemplateData.icon?.trim() || undefined,

@@ -63,7 +63,6 @@ class MapEditorPOIService {
 
     const dbQuery: Record<string, unknown> = {
       floorPlan: floorPlanId,
-      // Default to only active POIs if not explicitly specified
       isActive: typeof query.isActive === "boolean" ? query.isActive : true,
     };
 
@@ -105,7 +104,6 @@ class MapEditorPOIService {
         updatedAt: doc.updatedAt,
       };
 
-      // Only include optional properties if they have values
       if (doc.description) {
         result.description = doc.description;
       }
