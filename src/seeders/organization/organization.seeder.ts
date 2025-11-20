@@ -6,7 +6,7 @@ import Organization, {
 import VenueTemplate from "../../models/admin/organization/venueTemplate";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-import { SeedOrganizationPayload } from "../../types";
+import { SeedOrganizationPayload } from "../../types/seeders/organization";
 
 const organizationsToSeed: SeedOrganizationPayload[] = [
   {

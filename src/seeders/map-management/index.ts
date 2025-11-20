@@ -1,6 +1,14 @@
 import seedBuildings from "./buildings.seeder";
 import seedFloorPlans from "./floorPlans.seeder";
 import seedSettings from "./settings.seeder";
+import seedMapEditorPOIs from "./mapEditorPOI.seeder";
+import seedMapEditorEntrances from "./mapEditorEntrance.seeder";
+import seedMapEditorElevators from "./mapEditorElevator.seeder";
+import seedMapEditorPaths from "./mapEditorPath.seeder";
+import seedMapEditorRestrictedZones from "./mapEditorRestrictedZone.seeder";
+import seedMapEditorLabels from "./mapEditorLabel.seeder";
+import seedMapEditorMeasurements from "./mapEditorMeasurement.seeder";
+import { seedMapEditorAnnotations } from "./mapEditorAnnotation.seeder";
 
 const runMapManagementSeeders = async () => {
   try {
@@ -12,6 +20,38 @@ const runMapManagementSeeders = async () => {
 
     console.log("📐 Seeding floor plans...");
     await seedFloorPlans();
+    console.log("");
+
+    console.log("📍 Seeding map editor POIs...");
+    await seedMapEditorPOIs();
+    console.log("");
+
+    console.log("🚪 Seeding map editor entrances...");
+    await seedMapEditorEntrances();
+    console.log("");
+
+    console.log("🛗 Seeding map editor elevators...");
+    await seedMapEditorElevators();
+    console.log("");
+
+    console.log("🛤️  Seeding map editor paths...");
+    await seedMapEditorPaths();
+    console.log("");
+
+    console.log("🚫 Seeding map editor restricted zones...");
+    await seedMapEditorRestrictedZones();
+    console.log("");
+
+    console.log("🏷️  Seeding map editor labels...");
+    await seedMapEditorLabels();
+    console.log("");
+
+    console.log("📏 Seeding map editor measurements...");
+    await seedMapEditorMeasurements();
+    console.log("");
+
+    console.log("📝 Seeding map editor annotations...");
+    await seedMapEditorAnnotations();
     console.log("");
 
     console.log("⚙️  Seeding settings...");
@@ -42,4 +82,3 @@ if (require.main === module) {
 }
 
 export default runMapManagementSeeders;
-
