@@ -5,4 +5,5 @@ export * from "./mapEditorEntrance";
 export * from "./mapEditorElevator";
 export * from "./mapEditorPath";
 export * from "./mapEditorRestrictedZone";
+export * from "./mapEditorLabel";
 export * from "./settings";

@@ -6,6 +6,7 @@ import seedMapEditorEntrances from "./mapEditorEntrance.seeder";
 import seedMapEditorElevators from "./mapEditorElevator.seeder";
 import seedMapEditorPaths from "./mapEditorPath.seeder";
 import seedMapEditorRestrictedZones from "./mapEditorRestrictedZone.seeder";
+import seedMapEditorLabels from "./mapEditorLabel.seeder";
 
 const runMapManagementSeeders = async () => {
   try {
@@ -37,6 +38,10 @@ const runMapManagementSeeders = async () => {
 
     console.log("🚫 Seeding map editor restricted zones...");
     await seedMapEditorRestrictedZones();
+    console.log("");
+
+    console.log("🏷️  Seeding map editor labels...");
+    await seedMapEditorLabels();
     console.log("");
 
     console.log("⚙️  Seeding settings...");
