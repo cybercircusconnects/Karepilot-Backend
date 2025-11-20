@@ -4,6 +4,7 @@ import seedSettings from "./settings.seeder";
 import seedMapEditorPOIs from "./mapEditorPOI.seeder";
 import seedMapEditorEntrances from "./mapEditorEntrance.seeder";
 import seedMapEditorElevators from "./mapEditorElevator.seeder";
+import seedMapEditorPaths from "./mapEditorPath.seeder";
 
 const runMapManagementSeeders = async () => {
   try {
@@ -27,6 +28,10 @@ const runMapManagementSeeders = async () => {
 
     console.log("🛗 Seeding map editor elevators...");
     await seedMapEditorElevators();
+    console.log("");
+
+    console.log("🛤️  Seeding map editor paths...");
+    await seedMapEditorPaths();
     console.log("");
 
     console.log("⚙️  Seeding settings...");
