@@ -4,16 +4,7 @@ import MapEditorPath from "../../models/admin/map-management/mapEditorPath";
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface PathTemplate {
-  name?: string;
-  points: Array<{
-    x: number;
-    y: number;
-  }>;
-  color?: string;
-  strokeWidth?: number;
-}
+import { PathTemplate } from "../../types/seeders";
 
 const getPathColor = (): string => {
   return "#2563EB";

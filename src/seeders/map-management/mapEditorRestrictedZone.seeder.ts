@@ -4,19 +4,7 @@ import MapEditorRestrictedZone from "../../models/admin/map-management/mapEditor
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface RestrictedZoneTemplate {
-  name: string;
-  description?: string;
-  restrictionType: "Staff Only" | "Authorized Personnel" | "Emergency Access Only";
-  coordinates: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  color?: string;
-}
+import { RestrictedZoneTemplate } from "../../types/seeders";
 
 const getRestrictedZoneColor = (): string => {
   return "#EF4444";

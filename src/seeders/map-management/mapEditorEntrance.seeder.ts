@@ -4,19 +4,7 @@ import MapEditorEntrance from "../../models/admin/map-management/mapEditorEntran
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface EntranceTemplate {
-  name: string;
-  category: string;
-  description?: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
-  icon?: string;
-  color?: string;
-  isAccessible?: boolean;
-}
+import { EntranceTemplate } from "../../types/seeders";
 
 const getEntranceColor = (category: string): string => {
   const colorMap: Record<string, string> = {

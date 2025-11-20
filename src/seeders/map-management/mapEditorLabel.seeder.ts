@@ -4,17 +4,7 @@ import MapEditorLabel from "../../models/admin/map-management/mapEditorLabel";
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface LabelTemplate {
-  text: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
-  fontSize?: string;
-  fontWeight?: string;
-  color?: string;
-}
+import { LabelTemplate } from "../../types/seeders";
 
 const groundFloorLabelTemplate: LabelTemplate[] = [
   {

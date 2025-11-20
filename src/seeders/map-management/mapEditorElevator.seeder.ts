@@ -4,18 +4,7 @@ import MapEditorElevator from "../../models/admin/map-management/mapEditorElevat
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface ElevatorTemplate {
-  name: string;
-  description?: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
-  connectsToFloors: string[];
-  color?: string;
-  isAccessible?: boolean;
-}
+import { ElevatorTemplate } from "../../types/seeders";
 
 const getElevatorColor = (): string => {
   return "#7C3AED"; 

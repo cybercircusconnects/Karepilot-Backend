@@ -4,19 +4,7 @@ import MapEditorPOI from "../../models/admin/map-management/mapEditorPOI";
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface POITemplate {
-  name: string;
-  category: string;
-  description?: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
-  icon?: string;
-  color?: string;
-  isAccessible?: boolean;
-}
+import { POITemplate } from "../../types/seeders";
 
 const getPOIColor = (category: string): string => {
   const colorMap: Record<string, string> = {

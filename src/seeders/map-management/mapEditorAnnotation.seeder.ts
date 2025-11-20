@@ -2,17 +2,7 @@ import MapEditorAnnotation from "../../models/admin/map-management/mapEditorAnno
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface AnnotationTemplate {
-  name: string;
-  description: string;
-  type: string;
-  coordinates: {
-    x: number;
-    y: number;
-  };
-  color: string;
-}
+import { AnnotationTemplate } from "../../types/seeders";
 
 const groundFloorAnnotationTemplate: AnnotationTemplate[] = [
   {
@@ -113,7 +103,6 @@ export const seedMapEditorAnnotations = async () => {
       const floorNumber = (floorPlan as any).floorNumber;
       const floorLabel = (floorPlan as any).floorLabel || "";
       
-      // Determine if it's ground floor
       const isGroundFloor = 
         floorNumber === 0 ||
         floorNumber === 1 ||

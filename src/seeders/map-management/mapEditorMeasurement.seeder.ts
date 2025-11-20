@@ -4,21 +4,7 @@ import MapEditorMeasurement from "../../models/admin/map-management/mapEditorMea
 import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
-
-interface MeasurementTemplate {
-  startPoint: {
-    x: number;
-    y: number;
-  };
-  endPoint: {
-    x: number;
-    y: number;
-  };
-  distance: number;
-  unit: string;
-  color?: string;
-  strokeWidth?: number;
-}
+import { MeasurementTemplate } from "../../types/seeders";
 
 const groundFloorMeasurementTemplate: MeasurementTemplate[] = [
   {
