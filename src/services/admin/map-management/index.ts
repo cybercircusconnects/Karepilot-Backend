@@ -7,4 +7,5 @@ export * from "./mapEditorPath";
 export * from "./mapEditorRestrictedZone";
 export * from "./mapEditorLabel";
 export * from "./mapEditorMeasurement";
+export * from "./mapEditorAnnotation";
 export * from "./settings";
