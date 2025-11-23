@@ -3,6 +3,7 @@ import runUserManagementSeeders from "./user-management/index";
 import runOrganizationSeeders from "./organization/index";
 import runMapManagementSeeders from "./map-management/index";
 import runPointOfInterestSeeders from "./points-of-interest";
+import runAssetTrackingSeeders from "./asset-tracking/index";
 
 const runAllSeeders = async () => {
   try {
@@ -25,6 +26,10 @@ const runAllSeeders = async () => {
 
     console.log("📍 Running Points of Interest seeders...");
     await runPointOfInterestSeeders();
+    console.log("");
+
+    console.log("📦 Running Asset Tracking seeders...");
+    await runAssetTrackingSeeders();
 
     console.log("\n✅ All seeders completed successfully!");
     process.exit(0);
