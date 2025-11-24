@@ -15,11 +15,19 @@ export const getDashboardData = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    const data = await dashboardService.getDashboardData({
+    const query: { organizationId: string; startDate?: Date; endDate?: Date } = {
       organizationId: id,
-      startDate: req.query.startDate ? new Date(req.query.startDate as string) : undefined,
-      endDate: req.query.endDate ? new Date(req.query.endDate as string) : undefined,
-    });
+    };
+
+    if (req.query.startDate) {
+      query.startDate = new Date(req.query.startDate as string);
+    }
+
+    if (req.query.endDate) {
+      query.endDate = new Date(req.query.endDate as string);
+    }
+
+    const data = await dashboardService.getDashboardData(query);
 
     res.status(200).json({
       success: true,
