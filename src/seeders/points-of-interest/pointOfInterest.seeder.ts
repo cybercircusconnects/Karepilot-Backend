@@ -7,194 +7,146 @@ import Organization from "../../models/admin/organization/organization";
 import AdminUser from "../../models/admin/user-management/users";
 import { AdminRole } from "../../models/admin/user-management/roles-permissions";
 import { PointOfInterestStatus } from "../../types/admin/points-of-interest";
+import MapBuilding from "../../models/admin/map-management/mapBuilding";
+import MapFloorPlan from "../../models/admin/map-management/mapFloorPlan";
 
-interface SeedPointOfInterestPayload {
-  organizationName: string;
+interface POITemplate {
   name: string;
   category: string;
   categoryType?: string;
-  building: string;
-  floor: string;
-  roomNumber?: string;
   description?: string;
   tags?: string[];
   amenities?: string[];
-  contact?: {
-    phone?: string;
-    email?: string;
-    operatingHours?: string;
-  };
   accessibility?: {
     wheelchairAccessible?: boolean;
     hearingLoop?: boolean;
     visualAidSupport?: boolean;
   };
-  status?: PointOfInterestStatus;
-  mapCoordinates?: {
-    latitude?: number;
-    longitude?: number;
-  };
-  isActive?: boolean;
 }
 
-const pointsOfInterestToSeed: SeedPointOfInterestPayload[] = [
+const randomInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const randomFloat = (min: number, max: number): number => {
+  return Math.random() * (max - min) + min;
+};
+
+const randomItem = <T>(array: T[]): T => {
+  if (array.length === 0) {
+    throw new Error("Cannot get random item from empty array");
+  }
+  return array[Math.floor(Math.random() * array.length)]!;
+};
+
+const seededRandom = (seed: number, min: number, max: number): number => {
+  const x = Math.sin(seed) * 10000;
+  return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+};
+
+const poiTemplates: POITemplate[] = [
   {
-    organizationName: "CityCare General Hospital",
     name: "Emergency Department",
     category: "Emergency",
     categoryType: "Medical Services",
-    building: "Main Hospital",
-    floor: "Ground Floor",
-    roomNumber: "ED-001",
     description: "24/7 emergency medical services with on-site trauma care and triage.",
     tags: ["Emergency", "24/7", "Trauma"],
     amenities: ["Helipad Access", "Wheelchair Access"],
-    contact: {
-      phone: "+1-212-555-0199",
-      email: "emergency@citycaregh.com",
-      operatingHours: "24/7",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: true,
       visualAidSupport: false,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 40.7419,
-      longitude: -73.9894,
-    },
   },
   {
-    organizationName: "CityCare General Hospital",
     name: "Advanced Imaging Center",
     category: "Radiology",
     categoryType: "Diagnostics",
-    building: "Diagnostic Wing",
-    floor: "1st Floor",
-    roomNumber: "RAD-110",
     description: "Full-service imaging including MRI, CT, and ultrasound diagnostics.",
     tags: ["Radiology", "Diagnostics", "Imaging"],
     amenities: ["Patient Lounge", "Digital Results"],
-    contact: {
-      phone: "+1-212-555-0184",
-      email: "imaging@citycaregh.com",
-      operatingHours: "6:00 AM - 10:00 PM",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: false,
       visualAidSupport: true,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 40.7424,
-      longitude: -73.9885,
-    },
   },
   {
-    organizationName: "SkyWays International Airport",
-    name: "Terminal 1 Security Checkpoint",
+    name: "Security Checkpoint",
     category: "Security",
-    categoryType: "Airport Services",
-    building: "Terminal 1",
-    floor: "Departures Level",
-    roomNumber: "SEC-T1",
-    description: "Primary passenger screening with TSA PreCheck and FastTrack lanes.",
-    tags: ["Security", "TSA", "PreCheck"],
+    categoryType: "Security Services",
+    description: "Primary passenger screening with security checkpoints.",
+    tags: ["Security", "Checkpoint"],
     amenities: ["FastTrack Lanes", "Priority Screening"],
-    contact: {
-      phone: "+44 20 7946 0110",
-      operatingHours: "24/7",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: true,
       visualAidSupport: true,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 51.4703,
-      longitude: -0.4585,
-    },
   },
   {
-    organizationName: "SkyWays International Airport",
-    name: "International Lounge A",
+    name: "International Lounge",
     category: "Lounge",
     categoryType: "Passenger Amenities",
-    building: "Terminal 2",
-    floor: "Mezzanine",
-    roomNumber: "LNG-A",
     description: "Premium lounge with shower suites, dining, and quiet workspaces.",
     tags: ["Lounge", "Premium", "Dining"],
     amenities: ["Showers", "Private Suites", "Buffet"],
-    contact: {
-      phone: "+44 20 7946 0450",
-      email: "loungeA@skywaysairport.com",
-      operatingHours: "4:00 AM - 12:00 AM",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: false,
       visualAidSupport: true,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 51.4711,
-      longitude: -0.456,
-    },
   },
   {
-    organizationName: "Harborfront Shopping Plaza",
-    name: "Harborfront Food Court",
+    name: "Food Court",
     category: "Food & Beverage",
     categoryType: "Dining",
-    building: "North Concourse",
-    floor: "2nd Floor",
-    roomNumber: "FC-201",
-    description: "Multi-cuisine food court with seating for 300 visitors.",
+    description: "Multi-cuisine food court with various dining options.",
     tags: ["Food Court", "Dining", "Family Friendly"],
     amenities: ["Free WiFi", "Family Seating", "Charging Stations"],
-    contact: {
-      phone: "+1-415-555-7712",
-      operatingHours: "10:00 AM - 11:00 PM",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: false,
       visualAidSupport: false,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 37.7936,
-      longitude: -122.3966,
-    },
   },
   {
-    organizationName: "Harborfront Shopping Plaza",
-    name: "Harbor Cinema",
+    name: "Cinema",
     category: "Entertainment",
     categoryType: "Leisure",
-    building: "South Atrium",
-    floor: "3rd Floor",
-    roomNumber: "CIN-301",
-    description: "Luxury cinema with 8 screens featuring recliners and in-seat service.",
+    description: "Luxury cinema with multiple screens featuring premium seating.",
     tags: ["Cinema", "Entertainment", "IMAX"],
     amenities: ["Recliner Seats", "In-seat Dining", "Dolby Atmos"],
-    contact: {
-      phone: "+1-415-555-7755",
-      operatingHours: "11:00 AM - 12:00 AM",
-    },
     accessibility: {
       wheelchairAccessible: true,
       hearingLoop: true,
       visualAidSupport: true,
     },
-    status: PointOfInterestStatus.ACTIVE,
-    mapCoordinates: {
-      latitude: 37.7929,
-      longitude: -122.3952,
+  },
+  {
+    name: "Pharmacy",
+    category: "Pharmacy",
+    categoryType: "Medical Services",
+    description: "Full-service pharmacy with prescription and over-the-counter medications.",
+    tags: ["Pharmacy", "Prescriptions", "Health"],
+    amenities: ["Consultation", "Health Products"],
+    accessibility: {
+      wheelchairAccessible: true,
+      hearingLoop: false,
+      visualAidSupport: true,
+    },
+  },
+  {
+    name: "Information Desk",
+    category: "Information",
+    categoryType: "Services",
+    description: "Customer service and information desk for visitor assistance.",
+    tags: ["Information", "Customer Service", "Help"],
+    amenities: ["Multilingual Support", "Maps"],
+    accessibility: {
+      wheelchairAccessible: true,
+      hearingLoop: true,
+      visualAidSupport: true,
     },
   },
 ];
@@ -205,23 +157,13 @@ const seedPointsOfInterest = async () => {
       await dbConnect();
     }
 
-    const organizationNames = Array.from(
-      new Set(pointsOfInterestToSeed.map((poi) => poi.organizationName)),
-    );
-
-    const organizations = await Organization.find({
-      name: { $in: organizationNames },
-    }).select("name _id");
-
-    const organizationMap = new Map<string, mongoose.Types.ObjectId>();
-    organizations.forEach((org) => {
-      organizationMap.set(org.name.toLowerCase(), org._id as mongoose.Types.ObjectId);
-    });
-
+    const organizations = await Organization.find({ isActive: true }).select("name _id email");
+    
     if (organizations.length === 0) {
       console.warn(
         "⚠️  No organizations found. Please run the organization seeder before the POI seeder.",
       );
+      return;
     }
 
     const adminUser = await AdminUser.findOne({ role: AdminRole.ADMIN }).select("_id");
@@ -237,65 +179,131 @@ const seedPointsOfInterest = async () => {
         ? adminUser._id
         : undefined;
 
-    let createdCount = 0;
-    let skippedCount = 0;
-    let missingOrgCount = 0;
+    let totalCreatedCount = 0;
+    let totalSkippedCount = 0;
 
-    for (const poi of pointsOfInterestToSeed) {
-      const organizationId = organizationMap.get(poi.organizationName.toLowerCase());
+    console.log(`📋 Found ${organizations.length} organization(s) to seed POIs for`);
 
-      if (!organizationId) {
-        console.warn(
-          `⚠️  Organization "${poi.organizationName}" not found. Skipping POI "${poi.name}".`,
+    for (const org of organizations) {
+      const orgId = org._id as mongoose.Types.ObjectId;
+      const orgName = org.name;
+      console.log(`\n🏢 Processing organization: "${orgName}" (${orgId})`);
+
+      const buildings = await MapBuilding.find({ 
+        organization: orgId, 
+        isActive: true 
+      }).select("name _id");
+
+      if (buildings.length === 0) {
+        console.log(`   ⚠️  No buildings found for "${orgName}", skipping...`);
+        continue;
+      }
+
+      const floors = await MapFloorPlan.find({ 
+        building: { $in: buildings.map(b => b._id) } 
+      }).select("title building _id");
+
+      const orgSeed = parseInt(orgId.toString().slice(-8), 16);
+
+      const poiCount = seededRandom(orgSeed, 4, 8);
+      const selectedTemplates = poiTemplates.slice(0, Math.min(poiCount, poiTemplates.length));
+
+      let orgCreatedCount = 0;
+      let orgSkippedCount = 0;
+
+      for (let i = 0; i < selectedTemplates.length; i++) {
+        const template = selectedTemplates[i];
+        if (!template) continue;
+        const itemSeed = orgSeed + i;
+
+        const building = randomItem(buildings);
+        const buildingFloors = floors.filter(f => 
+          f.building.toString() === (building._id as mongoose.Types.ObjectId).toString()
         );
-        missingOrgCount++;
-        continue;
+        const floor = buildingFloors.length > 0 
+          ? randomItem(buildingFloors) 
+          : null;
+
+        const roomPrefix = template.category.substring(0, 3).toUpperCase();
+        const roomNumber = `${roomPrefix}-${seededRandom(itemSeed, 100, 999)}`;
+
+        const baseLat = seededRandom(itemSeed, 30, 60);
+        const baseLng = seededRandom(itemSeed + 1000, -120, 20);
+        const latOffset = randomFloat(-0.1, 0.1);
+        const lngOffset = randomFloat(-0.1, 0.1);
+
+        const status = seededRandom(itemSeed, 1, 10) <= 8 
+          ? PointOfInterestStatus.ACTIVE 
+          : PointOfInterestStatus.INACTIVE;
+
+        const accessibility = {
+          wheelchairAccessible: seededRandom(itemSeed, 1, 10) <= 8,
+          hearingLoop: seededRandom(itemSeed + 1, 1, 10) <= 5,
+          visualAidSupport: seededRandom(itemSeed + 2, 1, 10) <= 6,
+        };
+
+        const phoneArea = seededRandom(itemSeed, 200, 999);
+        const phoneNum = seededRandom(itemSeed + 1, 1000, 9999);
+        const emailDomain = org.email && org.email.includes('@') ? org.email.split('@')[1] : 'example.com';
+        const contactEmail = `${template.name.toLowerCase().replace(/\s+/g, '')}@${emailDomain}`;
+
+        const poiName = `${template.name} ${seededRandom(itemSeed, 1, 5)}`;
+
+        const existingPoi = await PointOfInterest.findOne({
+          organization: orgId,
+          name: { $regex: new RegExp(`^${poiName}$`, "i") },
+        });
+
+        if (existingPoi) {
+          orgSkippedCount++;
+          continue;
+        }
+
+        await PointOfInterest.create({
+          organization: orgId,
+          name: poiName,
+          category: template.category,
+          categoryType: template.categoryType,
+          building: building.name,
+          floor: floor ? floor.title : `${building.name} Ground Floor`,
+          roomNumber: roomNumber,
+          description: template.description,
+          tags: template.tags ?? [],
+          amenities: template.amenities ?? [],
+          contact: {
+            phone: `+1-${phoneArea}-555-${phoneNum}`,
+            email: contactEmail,
+            operatingHours: seededRandom(itemSeed, 1, 2) === 1 ? "24/7" : "8:00 AM - 10:00 PM",
+          },
+          accessibility: {
+            wheelchairAccessible: accessibility.wheelchairAccessible,
+            hearingLoop: accessibility.hearingLoop,
+            visualAidSupport: accessibility.visualAidSupport,
+          },
+          status: status,
+          mapCoordinates: {
+            latitude: baseLat + latOffset,
+            longitude: baseLng + lngOffset,
+          },
+          isActive: status === PointOfInterestStatus.ACTIVE,
+          createdAt: new Date(Date.now() - seededRandom(itemSeed, 0, 180) * 24 * 60 * 60 * 1000),
+          createdBy,
+          updatedBy: createdBy,
+        });
+
+        console.log(`   ✅ Created POI: "${poiName}"`);
+        orgCreatedCount++;
       }
 
-      const existingPoi = await PointOfInterest.findOne({
-        organization: organizationId,
-        name: { $regex: new RegExp(`^${poi.name}$`, "i") },
-      });
-
-      if (existingPoi) {
-        console.log(`⏭️  POI "${poi.name}" already exists for "${poi.organizationName}", skipping...`);
-        skippedCount++;
-        continue;
-      }
-
-      await PointOfInterest.create({
-        organization: organizationId,
-        name: poi.name,
-        category: poi.category,
-        categoryType: poi.categoryType,
-        building: poi.building,
-        floor: poi.floor,
-        roomNumber: poi.roomNumber,
-        description: poi.description,
-        tags: poi.tags ?? [],
-        amenities: poi.amenities ?? [],
-        contact: poi.contact,
-        accessibility: {
-          wheelchairAccessible: poi.accessibility?.wheelchairAccessible ?? false,
-          hearingLoop: poi.accessibility?.hearingLoop ?? false,
-          visualAidSupport: poi.accessibility?.visualAidSupport ?? false,
-        },
-        status: poi.status ?? PointOfInterestStatus.ACTIVE,
-        mapCoordinates: poi.mapCoordinates,
-        isActive: poi.isActive ?? true,
-        createdBy,
-        updatedBy: createdBy,
-      });
-
-      console.log(`✅ Point of Interest "${poi.name}" created for "${poi.organizationName}"`);
-      createdCount++;
+      totalCreatedCount += orgCreatedCount;
+      totalSkippedCount += orgSkippedCount;
+      console.log(`   📊 Created: ${orgCreatedCount}, Skipped: ${orgSkippedCount}`);
     }
 
     console.log("\n📊 Points of Interest Seeding Summary:");
-    console.log(`   ✅ Created: ${createdCount}`);
-    console.log(`   ⏭️  Skipped: ${skippedCount}`);
-    console.log(`   ⚠️  Missing Organization: ${missingOrgCount}`);
-    console.log(`   📋 Total Planned: ${pointsOfInterestToSeed.length}`);
+    console.log(`   ✅ Total Created: ${totalCreatedCount}`);
+    console.log(`   ⏭️  Total Skipped: ${totalSkippedCount}`);
+    console.log(`   🏢 Organizations Processed: ${organizations.length}`);
   } catch (error: any) {
     console.error("❌ Error seeding points of interest:", error.message);
     throw error;

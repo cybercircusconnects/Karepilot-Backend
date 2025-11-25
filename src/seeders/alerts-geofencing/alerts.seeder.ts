@@ -160,6 +160,11 @@ const seedAlerts = async () => {
       return;
     }
 
+    const seededRandom = (seed: number, min: number, max: number): number => {
+      const x = Math.sin(seed) * 10000;
+      return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+    };
+
     console.log(`📋 Found ${organizations.length} organization(s) to seed alerts for`);
     
     for (const org of organizations) {
@@ -167,9 +172,26 @@ const seedAlerts = async () => {
       const orgName = org.name;
       console.log(`\n🏢 Processing organization: "${orgName}" (${orgId})`);
 
-      for (const alertData of alertsToSeed) {
+      const orgSeed = parseInt(orgId.toString().slice(-8), 16);
+
+      const orgAssets = await Asset.find({ organization: orgId, isActive: true }).select("name _id");
+      const orgAssetMap = new Map<string, mongoose.Types.ObjectId>();
+      orgAssets.forEach((asset) => {
+        orgAssetMap.set(asset.name.trim().toLowerCase(), asset._id as mongoose.Types.ObjectId);
+      });
+
+      const alertCount = seededRandom(orgSeed, 3, 8);
+      const selectedAlerts = alertsToSeed.slice(0, Math.min(alertCount, alertsToSeed.length));
+
+      for (let i = 0; i < selectedAlerts.length; i++) {
+        const alertData = selectedAlerts[i];
+        if (!alertData) continue;
+        const itemSeed = orgSeed + i;
+
+        const alertName = `${alertData.name} ${seededRandom(itemSeed, 1, 5)}`;
+
         const existingAlert = await Alert.findOne({
-          name: alertData.name,
+          name: alertName,
           organization: orgId,
         });
 
@@ -182,6 +204,18 @@ const seedAlerts = async () => {
         if (alertData.buildingName) {
           const buildingKey = `${orgId.toString()}-${alertData.buildingName.trim().toLowerCase()}`;
           buildingId = buildingMap.get(buildingKey) || null;
+          
+          if (buildingId) {
+            const building = await MapBuilding.findOne({ 
+              _id: buildingId,
+              organization: orgId,
+              isActive: true 
+            });
+            if (!building) {
+              buildingId = null;
+            }
+          }
+          
           if (!buildingId) {
             const orgBuildings = await MapBuilding.find({ 
               organization: orgId, 
@@ -198,10 +232,22 @@ const seedAlerts = async () => {
           if (alertData.floorTitle) {
             const floorKey = `${buildingId.toString()}-${alertData.floorTitle.trim().toLowerCase()}`;
             floorId = floorMap.get(floorKey) || null;
+            
+            if (floorId) {
+              const floorPlan = await MapFloorPlan.findOne({ 
+                _id: floorId,
+                building: buildingId,
+                organization: orgId 
+              });
+              if (!floorPlan) {
+                floorId = null;
+              }
+            }
           }
           if (!floorId) {
             const buildingFloors = await MapFloorPlan.find({ 
-              building: buildingId 
+              building: buildingId,
+              organization: orgId 
             }).limit(1);
             if (buildingFloors.length > 0 && buildingFloors[0]) {
               floorId = buildingFloors[0]._id as mongoose.Types.ObjectId;
@@ -215,13 +261,51 @@ const seedAlerts = async () => {
         }
 
         let assetId: mongoose.Types.ObjectId | null = null;
-        if (alertData.assetName) {
-          assetId = assetMap.get(alertData.assetName.trim().toLowerCase()) || null;
+        if (alertData.assetName && orgAssets.length > 0) {
+          assetId = orgAssetMap.get(alertData.assetName.trim().toLowerCase()) || null;
+          
+          if (assetId) {
+            const asset = await Asset.findOne({ 
+              _id: assetId,
+              organization: orgId,
+              isActive: true 
+            });
+            if (!asset) {
+              assetId = null;
+            }
+          }
+          
+          if (!assetId && orgAssets.length > 0) {
+            const randomIndex = seededRandom(itemSeed, 0, orgAssets.length - 1);
+            const randomAsset = orgAssets[randomIndex];
+            if (randomAsset) {
+              assetId = randomAsset._id as mongoose.Types.ObjectId;
+            }
+          }
         }
 
-        const timestamp = alertData.timestampMinutesAgo
-          ? new Date(Date.now() - alertData.timestampMinutesAgo * 60 * 1000)
-          : new Date();
+        const severitySeed = seededRandom(itemSeed, 1, 10);
+        let severity: AlertSeverity;
+        if (severitySeed <= 3) {
+          severity = AlertSeverity.HIGH;
+        } else if (severitySeed <= 7) {
+          severity = AlertSeverity.MEDIUM;
+        } else {
+          severity = AlertSeverity.LOW;
+        }
+
+        const statusSeed = seededRandom(itemSeed + 1, 1, 10);
+        let status: AlertStatus;
+        if (statusSeed <= 4) {
+          status = AlertStatus.ACTIVE;
+        } else if (statusSeed <= 7) {
+          status = AlertStatus.ACKNOWLEDGED;
+        } else {
+          status = AlertStatus.RESOLVED;
+        }
+
+        const timestampMinutesAgo = seededRandom(itemSeed, 1, 120);
+        const timestamp = new Date(Date.now() - timestampMinutesAgo * 60 * 1000);
 
         const newAlert = await Alert.create({
           organization: orgId,
@@ -229,11 +313,11 @@ const seedAlerts = async () => {
           floor: floorId,
           department: departmentId,
           asset: assetId,
-          name: alertData.name,
+          name: alertName,
           description: alertData.description || null,
           type: alertData.type,
-          severity: alertData.severity,
-          status: alertData.status,
+          severity: severity,
+          status: status,
           location: alertData.location || null,
           room: alertData.room || null,
           timestamp,
@@ -242,7 +326,7 @@ const seedAlerts = async () => {
           updatedBy: adminUser._id,
         });
 
-        console.log(`   ✅ Created alert: "${alertData.name}" (${newAlert._id})`);
+        console.log(`   ✅ Created alert: "${alertName}" (${severity}, ${status})`);
         createdCount++;
       }
     }

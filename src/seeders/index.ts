@@ -5,6 +5,7 @@ import runMapManagementSeeders from "./map-management/index";
 import runPointOfInterestSeeders from "./points-of-interest";
 import runAssetTrackingSeeders from "./asset-tracking/index";
 import runAlertsGeofencingSeeders from "./alerts-geofencing/index";
+import seedMobileUsers from "./mobile/mobileUsers.seeder";
 
 const runAllSeeders = async () => {
   try {
@@ -35,6 +36,10 @@ const runAllSeeders = async () => {
 
     console.log("🚨 Running Alerts & Geofencing seeders...");
     await runAlertsGeofencingSeeders();
+    console.log("");
+
+    console.log("📱 Running Mobile Users seeders...");
+    await seedMobileUsers();
 
     console.log("\n✅ All seeders completed successfully!");
     process.exit(0);
