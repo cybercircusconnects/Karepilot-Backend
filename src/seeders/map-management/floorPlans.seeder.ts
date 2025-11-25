@@ -390,6 +390,28 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
   },
 ];
 
+const seededRandom = (seed: number, min: number, max: number): number => {
+  const x = Math.sin(seed) * 10000;
+  return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+};
+
+const floorLabels = [
+  "Ground Floor",
+  "1st Floor",
+  "2nd Floor",
+  "3rd Floor",
+  "4th Floor",
+  "5th Floor",
+  "Basement",
+  "Mezzanine",
+  "Departure Level",
+  "Arrival Level",
+  "Lower Level",
+  "Upper Level",
+];
+
+const floorStatuses = [MapFloorPlanStatus.PUBLISHED, MapFloorPlanStatus.DRAFT, MapFloorPlanStatus.ARCHIVED];
+
 const seedFloorPlans = async () => {
   try {
     if (mongoose.connection.readyState === 0) {
@@ -401,23 +423,9 @@ const seedFloorPlans = async () => {
       throw new Error("No active organizations found. Please run the organization seeder first.");
     }
 
-    const organizationMap = new Map<string, mongoose.Types.ObjectId>();
-    organizations.forEach((org) => {
-      const normalizedName = org.name.trim().toLowerCase();
-      organizationMap.set(normalizedName, org._id as mongoose.Types.ObjectId);
-    });
-
     const buildings = await MapBuilding.find({ isActive: true });
     if (!buildings.length) {
       throw new Error("No active buildings found. Please run the buildings seeder first.");
-    }
-
-    const buildingMap = new Map<string, { id: mongoose.Types.ObjectId; orgId: mongoose.Types.ObjectId }>();
-    for (const building of buildings) {
-      const orgId = building.organization as mongoose.Types.ObjectId;
-      const normalizedBuildingName = building.name.trim().toLowerCase();
-      const key = `${orgId.toString()}-${normalizedBuildingName}`;
-      buildingMap.set(key, { id: building._id as mongoose.Types.ObjectId, orgId });
     }
 
     const adminUser = await AdminUser.findOne({ role: AdminRole.ADMIN }).select("_id");
@@ -428,94 +436,98 @@ const seedFloorPlans = async () => {
     const createdBy =
       adminUser && adminUser._id instanceof mongoose.Types.ObjectId ? adminUser._id : null;
 
-    let createdCount = 0;
-    let skippedCount = 0;
-    let missingBuildingCount = 0;
+    let totalCreatedCount = 0;
+    let totalSkippedCount = 0;
 
-    for (const floorPlanData of floorPlansToSeed) {
-      const normalizedOrgName = floorPlanData.organizationName.trim().toLowerCase();
-      const orgId = organizationMap.get(normalizedOrgName);
-      if (!orgId) {
-        console.warn(
-          `⚠️  Organization "${floorPlanData.organizationName}" not found. Skipping floor plan "${floorPlanData.title}".`,
-        );
-        missingBuildingCount++;
+    console.log(`📋 Found ${organizations.length} organization(s) to seed floor plans for`);
+
+    for (const org of organizations) {
+      const orgId = org._id as mongoose.Types.ObjectId;
+      const orgName = org.name;
+      console.log(`\n🏢 Processing organization: "${orgName}" (${orgId})`);
+
+      const orgBuildings = buildings.filter(b => 
+        b.organization.toString() === orgId.toString()
+      );
+
+      if (orgBuildings.length === 0) {
+        console.log(`   ⚠️  No buildings found for "${orgName}", skipping...`);
         continue;
       }
 
-      const normalizedBuildingName = floorPlanData.buildingName.trim().toLowerCase();
-      const buildingKey = `${orgId.toString()}-${normalizedBuildingName}`;
-      const buildingInfo = buildingMap.get(buildingKey);
+      const orgSeed = parseInt(orgId.toString().slice(-8), 16);
 
-      if (!buildingInfo) {
-        console.warn(
-          `⚠️  Building "${floorPlanData.buildingName}" for "${floorPlanData.organizationName}" not found. Skipping floor plan "${floorPlanData.title}".`,
-        );
-        missingBuildingCount++;
-        continue;
+      let orgCreatedCount = 0;
+      let orgSkippedCount = 0;
+
+      for (const building of orgBuildings) {
+        const buildingSeed = orgSeed + parseInt((building._id as mongoose.Types.ObjectId).toString().slice(-4), 16);
+        const floorCount = seededRandom(buildingSeed, 2, 5);
+
+        for (let i = 0; i < floorCount; i++) {
+          const floorSeed = buildingSeed + i;
+          const floorLabel = floorLabels[seededRandom(floorSeed, 0, floorLabels.length - 1)];
+          const floorNumber = seededRandom(floorSeed, 0, 5);
+          const status = floorStatuses[seededRandom(floorSeed, 0, floorStatuses.length - 1)];
+
+          const existing = await MapFloorPlan.findOne({
+            organization: orgId,
+            building: building._id,
+            floorLabel: { $regex: new RegExp(`^${floorLabel?.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "i") },
+          });
+
+          if (existing) {
+            orgSkippedCount++;
+            continue;
+          }
+
+          const title = `${building.name} ${floorLabel}`;
+          const scaleOptions = ["1:50", "1:75", "1:100", "1:150", "1:200"];
+          const scale = scaleOptions[seededRandom(floorSeed, 0, scaleOptions.length - 1)];
+
+          const floorPlan = new MapFloorPlan({
+            organization: orgId,
+            building: building._id,
+            title: title,
+            floorLabel: floorLabel,
+            floorNumber: floorNumber,
+            status: status,
+            media: {
+              fileUrl: `https://images.pexels.com/photos/${seededRandom(floorSeed, 1000000, 9999999)}/pexels-photo-${seededRandom(floorSeed, 1000000, 9999999)}.jpeg`,
+              fileKey: `floor-plans/${orgName.toLowerCase().replace(/\s+/g, '-')}-${building.name.toLowerCase().replace(/\s+/g, '-')}-${floorLabel?.toLowerCase().replace(/\s+/g, '-')}`,
+            },
+            metadata: {
+              scale: scale,
+              description: `${floorLabel} of ${building.name} with various facilities and amenities.`,
+              tags: [floorLabel?.toLowerCase().replace(/\s+/g, '-'), building.name.toLowerCase().replace(/\s+/g, '-')],
+            },
+            version: 1,
+            versionNotes: `Initial floor plan upload - ${floorLabel} layout`,
+            publishedAt: status === MapFloorPlanStatus.PUBLISHED 
+              ? new Date(Date.now() - seededRandom(floorSeed, 0, 90) * 24 * 60 * 60 * 1000)
+              : null,
+            isTemplate: false,
+            isActive: true,
+            createdAt: new Date(Date.now() - seededRandom(floorSeed, 0, 180) * 24 * 60 * 60 * 1000),
+            createdBy,
+            updatedBy: createdBy,
+          });
+
+          await floorPlan.save();
+          console.log(`   ✅ Created floor plan: "${title}" (${status})`);
+          orgCreatedCount++;
+        }
       }
 
-      if (!buildingInfo.orgId.equals(orgId as mongoose.Types.ObjectId)) {
-        console.warn(
-          `⚠️  Building "${floorPlanData.buildingName}" does not belong to "${floorPlanData.organizationName}". Skipping floor plan "${floorPlanData.title}".`,
-        );
-        missingBuildingCount++;
-        continue;
-      }
-
-      const normalizedFloorLabel = floorPlanData.floorLabel.trim();
-      const existing = await MapFloorPlan.findOne({
-        organization: orgId as mongoose.Types.ObjectId,
-        building: buildingInfo.id,
-        floorLabel: { $regex: new RegExp(`^${normalizedFloorLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "i") },
-      });
-
-      if (existing) {
-        console.log(
-          `⏭️  Floor plan "${floorPlanData.title}" already exists, skipping...`,
-        );
-        skippedCount++;
-        continue;
-      }
-
-      const floorPlan = new MapFloorPlan({
-        organization: orgId as mongoose.Types.ObjectId,
-        building: buildingInfo.id,
-        title: floorPlanData.title,
-        floorLabel: floorPlanData.floorLabel,
-        floorNumber: floorPlanData.floorNumber ?? null,
-        status: floorPlanData.status || MapFloorPlanStatus.DRAFT,
-        media: {
-          fileUrl: floorPlanData.media?.fileUrl || null,
-          fileKey: floorPlanData.media?.fileKey || null,
-        },
-        metadata: {
-          scale: floorPlanData.metadata?.scale || null,
-          description: floorPlanData.metadata?.description || null,
-          tags: floorPlanData.metadata?.tags || [],
-        },
-        version: 1,
-        versionNotes: floorPlanData.versionNotes || null,
-        publishedAt: floorPlanData.status === MapFloorPlanStatus.PUBLISHED ? new Date() : null,
-        isTemplate: floorPlanData.isTemplate || false,
-        isActive: true,
-        createdBy,
-        updatedBy: createdBy,
-      });
-
-      await floorPlan.save();
-      console.log(`✅ Floor plan "${floorPlanData.title}" created successfully!`);
-      console.log(`   Building: ${floorPlanData.buildingName}`);
-      console.log(`   Floor: ${floorPlanData.floorLabel}`);
-      console.log(`   Status: ${floorPlan.status}`);
-      createdCount++;
+      totalCreatedCount += orgCreatedCount;
+      totalSkippedCount += orgSkippedCount;
+      console.log(`   📊 Created: ${orgCreatedCount}, Skipped: ${orgSkippedCount}`);
     }
 
     console.log("\n📊 Floor Plans Seeding Summary:");
-    console.log(`   ✅ Created: ${createdCount} floor plans`);
-    console.log(`   ⏭️  Skipped: ${skippedCount} floor plans`);
-    console.log(`   ⚠️  Missing Building: ${missingBuildingCount} floor plans`);
-    console.log(`   📋 Total: ${floorPlansToSeed.length} floor plans`);
+    console.log(`   ✅ Total Created: ${totalCreatedCount}`);
+    console.log(`   ⏭️  Total Skipped: ${totalSkippedCount}`);
+    console.log(`   🏢 Organizations Processed: ${organizations.length}`);
   } catch (error: any) {
     console.error("❌ Error seeding floor plans:", error.message);
     throw error;

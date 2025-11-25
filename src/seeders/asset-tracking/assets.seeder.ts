@@ -344,6 +344,11 @@ const seedAssets = async () => {
       return;
     }
 
+    const seededRandom = (seed: number, min: number, max: number): number => {
+      const x = Math.sin(seed) * 10000;
+      return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+    };
+
     console.log(`📋 Found ${organizations.length} organization(s) to seed assets for`);
     
     for (const org of organizations) {
@@ -351,9 +356,19 @@ const seedAssets = async () => {
       const orgName = org.name;
       console.log(`\n🏢 Processing organization: "${orgName}" (${orgId})`);
 
-      for (const assetData of assetsToSeed) {
+      const orgSeed = parseInt(orgId.toString().slice(-8), 16);
+
+      const assetCount = seededRandom(orgSeed, 8, 15);
+      const selectedAssets = assetsToSeed.slice(0, Math.min(assetCount, assetsToSeed.length));
+
+      for (let i = 0; i < selectedAssets.length; i++) {
+        const assetData = selectedAssets[i];
+        const itemSeed = orgSeed + i;
+
+        const assetName = `${assetData?.name} #${seededRandom(itemSeed, 1, 99)}`;
+
         const existingAsset = await Asset.findOne({
-          name: assetData.name,
+          name: assetName,
           organization: orgId,
         });
 
@@ -363,11 +378,23 @@ const seedAssets = async () => {
         }
 
         let buildingId: mongoose.Types.ObjectId | null = null;
-        if (assetData.buildingName) {
-          const buildingNameTrimmed = assetData.buildingName.trim();
+        if (assetData?.buildingName) {
+          const buildingNameTrimmed = assetData?.buildingName.trim();
           const buildingKey = `${orgId.toString()}-${buildingNameTrimmed}`;
           const buildingKeyLower = `${orgId.toString()}-${buildingNameTrimmed.toLowerCase()}`;
           buildingId = buildingMap.get(buildingKey) || buildingMap.get(buildingKeyLower) || null;
+          
+          if (buildingId) {
+            const building = await MapBuilding.findOne({ 
+              _id: buildingId,
+              organization: orgId,
+              isActive: true 
+            });
+            if (!building) {
+              buildingId = null;
+            }
+          }
+          
           if (!buildingId) {
             const orgBuildings = await MapBuilding.find({ 
               organization: orgId, 
@@ -381,15 +408,27 @@ const seedAssets = async () => {
 
         let floorId: mongoose.Types.ObjectId | null = null;
         if (buildingId) {
-          if (assetData.floorTitle) {
-            const floorTitleTrimmed = assetData.floorTitle.trim();
+          if (assetData?.floorTitle) {
+            const floorTitleTrimmed = assetData?.floorTitle.trim();
             const floorKey = `${buildingId.toString()}-${floorTitleTrimmed}`;
             const floorKeyLower = `${buildingId.toString()}-${floorTitleTrimmed.toLowerCase()}`;
             floorId = floorMap.get(floorKey) || floorMap.get(floorKeyLower) || null;
+            
+            if (floorId) {
+              const floorPlan = await MapFloorPlan.findOne({ 
+                _id: floorId,
+                building: buildingId,
+                organization: orgId 
+              });
+              if (!floorPlan) {
+                floorId = null;
+              }
+            }
           }
           if (!floorId) {
             const buildingFloors = await MapFloorPlan.find({ 
-              building: buildingId 
+              building: buildingId,
+              organization: orgId 
             }).limit(1);
             if (buildingFloors.length > 0 && buildingFloors[0]) {
               floorId = buildingFloors[0]._id as mongoose.Types.ObjectId;
@@ -398,36 +437,54 @@ const seedAssets = async () => {
         }
 
         let departmentId: mongoose.Types.ObjectId | null = null;
-        if (assetData.departmentName) {
-          const normalizedDeptName = assetData.departmentName.trim().toLowerCase();
+        if (assetData?.departmentName) {
+          const normalizedDeptName = assetData?.departmentName.trim().toLowerCase();
           departmentId = departmentMap.get(normalizedDeptName) || null;
         }
 
-        const lastSeen = assetData.lastSeenMinutesAgo
-          ? new Date(Date.now() - assetData.lastSeenMinutesAgo * 60 * 1000)
-          : new Date();
+        const batteryLevel = seededRandom(itemSeed, 15, 95);
+        const statusSeed = seededRandom(itemSeed, 1, 10);
+        let status: AssetStatus;
+        if (statusSeed <= 6) {
+          status = AssetStatus.ONLINE;
+        } else if (statusSeed <= 8) {
+          status = AssetStatus.OFFLINE;
+        } else {
+          status = AssetStatus.LOW_BATTERY;
+        }
+
+        const lastSeenMinutesAgo = seededRandom(itemSeed, 1, 30) / 2;
+        const lastSeen = new Date(Date.now() - lastSeenMinutesAgo * 60 * 1000);
+
+        const mapCoordinates = assetData?.mapCoordinates ? {
+          x: seededRandom(itemSeed, 50, 500),
+          y: seededRandom(itemSeed + 100, 50, 500),
+          latitude: assetData.mapCoordinates.latitude ? assetData.mapCoordinates.latitude + (seededRandom(itemSeed, -10, 10) / 100) : undefined,
+          longitude: assetData.mapCoordinates.longitude ? assetData.mapCoordinates.longitude + (seededRandom(itemSeed + 200, -10, 10) / 100) : undefined,
+        } : undefined;
 
         const asset = new Asset({
           organization: orgId,
-          name: assetData.name,
-          type: assetData.type,
-          status: assetData.status,
+          name: assetName,
+          type: assetData?.type,
+          status: status,
           building: buildingId,
           floor: floorId,
-          location: assetData.location || null,
+          location: assetData?.location || null,
           department: departmentId,
-          batteryLevel: assetData.batteryLevel || null,
+          batteryLevel: batteryLevel,
           lastSeen: lastSeen,
-          mapCoordinates: assetData.mapCoordinates || undefined,
-          description: assetData.description || null,
-          tags: assetData.tags || [],
+          mapCoordinates: mapCoordinates,
+          description: assetData?.description || null,
+          tags: assetData?.tags || [],
           isActive: true,
+          createdAt: new Date(Date.now() - seededRandom(itemSeed, 0, 180) * 24 * 60 * 60 * 1000),
           createdBy: adminUser._id,
           updatedBy: adminUser._id,
         });
 
         await asset.save();
-        console.log(`   ✅ Created asset: "${assetData.name}" (${asset._id})`);
+        console.log(`   ✅ Created asset: "${assetName}" (${status}, ${batteryLevel}% battery)`);
         createdCount++;
       }
     }

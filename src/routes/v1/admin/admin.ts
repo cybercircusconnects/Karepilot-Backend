@@ -9,6 +9,7 @@ import mapManagementRouter from "./map-management";
 import assetTrackingRouter from "./asset-tracking";
 import alertsGeofencingRouter from "./alerts-geofencing";
 import dashboardRouter from "./dashboard/dashboard";
+import analyticsRouter from "./analytics/analytics";
 
 const adminRouter = Router();
 
@@ -31,5 +32,7 @@ adminRouter.use("/asset-tracking", assetTrackingRouter);
 adminRouter.use("/alerts-geofencing", alertsGeofencingRouter);
 
 adminRouter.use("/dashboard", dashboardRouter);
+
+adminRouter.use("/analytics", analyticsRouter);
 
 export default adminRouter;

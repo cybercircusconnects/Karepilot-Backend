@@ -139,6 +139,11 @@ const seedGeofences = async () => {
       return;
     }
 
+    const seededRandom = (seed: number, min: number, max: number): number => {
+      const x = Math.sin(seed) * 10000;
+      return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+    };
+
     console.log(`📋 Found ${organizations.length} organization(s) to seed geofences for`);
     
     for (const org of organizations) {
@@ -146,9 +151,19 @@ const seedGeofences = async () => {
       const orgName = org.name;
       console.log(`\n🏢 Processing organization: "${orgName}" (${orgId})`);
 
-      for (const geofenceData of geofencesToSeed) {
+      const orgSeed = parseInt(orgId.toString().slice(-8), 16);
+
+      const geofenceCount = seededRandom(orgSeed, 2, 5);
+      const selectedGeofences = geofencesToSeed.slice(0, Math.min(geofenceCount, geofencesToSeed.length));
+
+      for (let i = 0; i < selectedGeofences.length; i++) {
+        const geofenceData = selectedGeofences[i];
+        const itemSeed = orgSeed + i;
+
+        const geofenceName = `${geofenceData?.name} ${seededRandom(itemSeed, 1, 5)}`;
+
         const existingGeofence = await Geofence.findOne({
-          name: geofenceData.name,
+          name: geofenceName,
           organization: orgId,
         });
 
@@ -158,9 +173,21 @@ const seedGeofences = async () => {
         }
 
         let buildingId: mongoose.Types.ObjectId | null = null;
-        if (geofenceData.buildingName) {
-          const buildingKey = `${orgId.toString()}-${geofenceData.buildingName.trim().toLowerCase()}`;
+        if (geofenceData?.buildingName) {
+          const buildingKey = `${orgId.toString()}-${geofenceData?.buildingName.trim().toLowerCase()}`;
           buildingId = buildingMap.get(buildingKey) || null;
+          
+          if (buildingId) {
+            const building = await MapBuilding.findOne({ 
+              _id: buildingId,
+              organization: orgId,
+              isActive: true 
+            });
+            if (!building) {
+              buildingId = null;
+            }
+          }
+          
           if (!buildingId) {
             const orgBuildings = await MapBuilding.find({ 
               organization: orgId, 
@@ -174,13 +201,25 @@ const seedGeofences = async () => {
 
         let floorId: mongoose.Types.ObjectId | null = null;
         if (buildingId) {
-          if (geofenceData.floorTitle) {
+          if (geofenceData?.floorTitle) {
             const floorKey = `${buildingId.toString()}-${geofenceData.floorTitle.trim().toLowerCase()}`;
             floorId = floorMap.get(floorKey) || null;
+            
+            if (floorId) {
+              const floorPlan = await MapFloorPlan.findOne({ 
+                _id: floorId,
+                building: buildingId,
+                organization: orgId 
+              });
+              if (!floorPlan) {
+                floorId = null;
+              }
+            }
           }
           if (!floorId) {
             const buildingFloors = await MapFloorPlan.find({ 
-              building: buildingId 
+              building: buildingId,
+              organization: orgId 
             }).limit(1);
             if (buildingFloors.length > 0 && buildingFloors[0]) {
               floorId = buildingFloors[0]._id as mongoose.Types.ObjectId;
@@ -188,22 +227,32 @@ const seedGeofences = async () => {
           }
         }
 
+        const notificationSettings = {
+          email: seededRandom(itemSeed, 1, 10) <= 7,
+          sms: seededRandom(itemSeed + 1, 1, 10) <= 3,
+          push: seededRandom(itemSeed + 2, 1, 10) <= 8,
+          sound: seededRandom(itemSeed + 3, 1, 10) <= 6,
+        };
+
+        const isActive = seededRandom(itemSeed, 1, 10) <= 8;
+
         const newGeofence = await Geofence.create({
           organization: orgId,
           building: buildingId,
           floor: floorId,
-          name: geofenceData.name,
-          description: geofenceData.description || null,
-          type: geofenceData.type,
-          alertOnEntry: geofenceData.alertOnEntry,
-          alertOnExit: geofenceData.alertOnExit,
-          notificationSettings: geofenceData.notificationSettings,
-          isActive: geofenceData.isActive,
+          name: geofenceName,
+          description: geofenceData?.description || null,
+          type: geofenceData?.type,
+          alertOnEntry: geofenceData?.alertOnEntry,
+          alertOnExit: geofenceData?.alertOnExit,
+          notificationSettings: notificationSettings,
+          isActive: isActive,
+          createdAt: new Date(Date.now() - seededRandom(itemSeed, 0, 180) * 24 * 60 * 60 * 1000),
           createdBy: adminUser._id,
           updatedBy: adminUser._id,
         });
 
-        console.log(`   ✅ Created geofence: "${geofenceData.name}" (${newGeofence._id})`);
+        console.log(`   ✅ Created geofence: "${geofenceName}" (${isActive ? 'Active' : 'Inactive'})`);
         createdCount++;
       }
     }
