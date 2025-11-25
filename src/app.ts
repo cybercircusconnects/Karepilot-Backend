@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 import { config } from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";

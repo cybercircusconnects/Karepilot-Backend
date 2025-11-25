@@ -1,14 +1,6 @@
 import cloudinary from "../../config/cloudinaryConfig";
 import { UploadApiResponse } from "cloudinary";
-
-export interface UploadResult {
-  success: boolean;
-  url?: string;
-  publicId?: string;
-  error?: string;
-  fileType?: string;
-  fileName?: string;
-}
+import { UploadResult } from "../../types/common/upload";
 
 export class UploadService {
   private readonly allowedMimeTypes = {
