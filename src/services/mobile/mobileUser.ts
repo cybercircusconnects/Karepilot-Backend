@@ -94,6 +94,10 @@ export class MobileUserService {
     const verificationCode = mobileUser.generateEmailVerificationCode();
     await mobileUser.save();
 
+    if (!mobileUser.email) {
+      throw new Error("User email not found");
+    }
+
     const emailSent = await emailService.sendEmailVerification(
       {
         fullName: mobileUser.fullName,
@@ -131,6 +135,27 @@ export class MobileUserService {
 
     return {
       user: mobileUser,
+      token,
+    };
+  }
+
+  async guestLogin(): Promise<MobileUserResult> {
+    const guestUser = new MobileUser({
+      fullName: `Guest User ${Date.now()}`,
+      isGuest: true,
+      status: MobileUserStatus.GUEST,
+      isEmailVerified: false,
+    });
+
+    await guestUser.save();
+
+    guestUser.lastLogin = new Date();
+    await guestUser.save();
+
+    const token = generateToken((guestUser._id as any).toString());
+
+    return {
+      user: guestUser,
       token,
     };
   }
@@ -290,6 +315,10 @@ export class MobileUserService {
 
     if (!emailSent) {
       throw new Error("Failed to send password reset email. Please try again.");
+    }
+
+    if (!mobileUser.email) {
+      throw new Error("User email not found");
     }
 
     return { email: mobileUser.email };

@@ -4,6 +4,7 @@ import {
   verifyEmail,
   resendVerificationCode,
   loginMobileUser,
+  guestLogin,
   getMobileProfile,
   updateMobileProfile,
   changeMobilePassword,
@@ -34,6 +35,8 @@ mobileRouter.post("/register", validate(mobileUserRegistrationSchema), registerM
 mobileRouter.post("/verify-email", validate(emailVerificationSchema), verifyEmail);
 
 mobileRouter.post("/login", validate(mobileUserLoginSchema), loginMobileUser);
+
+mobileRouter.post("/guest/login", guestLogin);
 
 mobileRouter.post(
   "/forgot-password",

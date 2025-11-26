@@ -110,6 +110,37 @@ export const loginMobileUser = async (req: Request, res: Response): Promise<void
   }
 };
 
+export const guestLogin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const result = await mobileUserService.guestLogin();
+
+    res.status(200).json({
+      success: true,
+      message: "Guest login successful",
+      data: {
+        user: {
+          id: result.user._id,
+          fullName: result.user.fullName,
+          email: result.user.email,
+          isGuest: result.user.isGuest,
+          isEmailVerified: result.user.isEmailVerified,
+          status: result.user.status,
+          lastLogin: result.user.lastLogin,
+          settings: result.user.settings,
+          createdAt: result.user.createdAt,
+          updatedAt: result.user.updatedAt,
+        },
+        token: result.token,
+      },
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Error during guest login",
+    });
+  }
+};
+
 export const getMobileProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = (req as any).user.id;

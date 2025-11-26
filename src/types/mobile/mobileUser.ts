@@ -5,12 +5,14 @@ export enum MobileUserStatus {
   INACTIVE = "Inactive",
   PENDING = "Pending",
   SUSPENDED = "Suspended",
+  GUEST = "Guest",
 }
 
 export interface IMobileUser extends Document {
   fullName: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
+  isGuest: boolean;
   isEmailVerified: boolean;
   emailVerificationCode?: string | undefined;
   emailVerificationExpires?: Date | undefined;

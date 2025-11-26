@@ -14,16 +14,25 @@ const mobileUserSchema = new Schema<IMobileUser>(
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: function(this: IMobileUser) {
+        return !this.isGuest;
+      },
       unique: true,
+      sparse: true,
       lowercase: true,
       trim: true,
       match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please provide a valid email address"],
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: function(this: IMobileUser) {
+        return !this.isGuest;
+      },
       minlength: [8, "Password must be at least 8 characters long"],
+    },
+    isGuest: {
+      type: Boolean,
+      default: false,
     },
     isEmailVerified: {
       type: Boolean,
@@ -144,7 +153,7 @@ mobileUserSchema.index({ status: 1 });
 mobileUserSchema.index({ isEmailVerified: 1 });
 
 mobileUserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password") || !this.password) return next();
   try {
     const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password as string, salt);
@@ -157,6 +166,7 @@ mobileUserSchema.pre("save", async function (next) {
 mobileUserSchema.methods.comparePassword = async function (
   candidatePassword: string,
 ): Promise<boolean> {
+  if (!this.password) return false;
   return bcrypt.compare(candidatePassword, this.password);
 };
 
