@@ -20,7 +20,6 @@ import {
   mobileUserUpdateSchema,
   mobilePasswordChangeSchema,
   emailVerificationSchema,
-  resendVerificationSchema,
   userSettingsSchema,
   passwordResetRequestSchema,
   passwordResetVerifySchema,
@@ -33,12 +32,6 @@ const mobileRouter = Router();
 mobileRouter.post("/register", validate(mobileUserRegistrationSchema), registerMobileUser);
 
 mobileRouter.post("/verify-email", validate(emailVerificationSchema), verifyEmail);
-
-mobileRouter.post(
-  "/resend-verification",
-  validate(resendVerificationSchema),
-  resendVerificationCode,
-);
 
 mobileRouter.post("/login", validate(mobileUserLoginSchema), loginMobileUser);
 
@@ -62,6 +55,8 @@ mobileRouter.post(
 );
 
 mobileRouter.use(authenticateMobile);
+
+mobileRouter.get("/resend-verification", resendVerificationCode);
 
 mobileRouter.get("/profile", getMobileProfile);
 

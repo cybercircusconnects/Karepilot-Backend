@@ -46,7 +46,9 @@ export class MobileUserService {
       throw new Error("Failed to send verification email. Please try again.");
     }
 
-    return { user: mobileUser };
+    const token = generateToken((mobileUser._id as any).toString());
+
+    return { user: mobileUser, token };
   }
 
   async verifyEmail(data: EmailVerificationData): Promise<MobileUserResult> {
@@ -77,8 +79,8 @@ export class MobileUserService {
     };
   }
 
-  async resendVerificationCode(email: string): Promise<VerificationResponse> {
-    const mobileUser = await MobileUser.findOne({ email }).select(
+  async resendVerificationCode(userId: string): Promise<VerificationResponse> {
+    const mobileUser = await MobileUser.findById(userId).select(
       "+emailVerificationCode +emailVerificationExpires",
     );
     if (!mobileUser) {
@@ -97,7 +99,7 @@ export class MobileUserService {
         fullName: mobileUser.fullName,
         verificationCode: verificationCode,
       },
-      email,
+      mobileUser.email,
     );
 
     if (!emailSent) {

@@ -17,6 +17,7 @@ export const registerMobileUser = async (req: Request, res: Response): Promise<v
           status: result.user.status,
           createdAt: result.user.createdAt,
         },
+        token: result.token,
       },
     });
   } catch (error: any) {
@@ -60,9 +61,9 @@ export const verifyEmail = async (req: Request, res: Response): Promise<void> =>
 
 export const resendVerificationCode = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email } = req.body;
+    const userId = (req as any).user._id.toString();
 
-    const result = await mobileUserService.resendVerificationCode(email);
+    const result = await mobileUserService.resendVerificationCode(userId);
 
     res.status(200).json({
       success: true,
