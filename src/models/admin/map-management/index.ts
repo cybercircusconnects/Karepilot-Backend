@@ -6,6 +6,8 @@ export { default as MapEditorPOI } from "./mapEditorPOI";
 export type { IMapEditorPOI } from "./mapEditorPOI";
 export { default as MapEditorEntrance } from "./mapEditorEntrance";
 export type { IMapEditorEntrance } from "./mapEditorEntrance";
+export { default as MapEditorPath } from "./mapEditorPath";
+export type { IMapEditorPath } from "./mapEditorPath";
 export { default as MapManagementSettings } from "./mapSettings";
 export type { IMapManagementSettings } from "./mapSettings";
 export { default as MapEditorPreferences } from "./mapEditorPreferences";

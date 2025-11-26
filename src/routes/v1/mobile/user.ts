@@ -27,6 +27,8 @@ import {
   passwordResetSchema,
 } from "../../../validations/mobile/mobileUser";
 import { validate } from "../../../utils";
+import mapRouter from "./map";
+import poiRouter from "./poi";
 
 const mobileRouter = Router();
 
@@ -70,5 +72,9 @@ mobileRouter.put("/change-password", validate(mobilePasswordChangeSchema), chang
 mobileRouter.get("/settings", getUserSettings);
 
 mobileRouter.patch("/settings", validate(userSettingsSchema), updateUserSettings);
+
+mobileRouter.use("/map", mapRouter);
+
+mobileRouter.use("/poi", poiRouter);
 
 export default mobileRouter;
