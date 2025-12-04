@@ -3,7 +3,8 @@ import { mobileUserService } from "../../services/mobile";
 
 export const registerMobileUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await mobileUserService.createMobileUser(req.body);
+    const { rememberMe = false } = req.body;
+    const result = await mobileUserService.createMobileUser(req.body, rememberMe);
 
     res.status(201).json({
       success: true,
@@ -80,9 +81,9 @@ export const resendVerificationCode = async (req: Request, res: Response): Promi
 
 export const loginMobileUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe = false } = req.body;
 
-    const result = await mobileUserService.loginMobileUser(email, password);
+    const result = await mobileUserService.loginMobileUser(email, password, rememberMe);
 
     res.status(200).json({
       success: true,

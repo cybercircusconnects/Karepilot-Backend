@@ -50,7 +50,7 @@ export interface UpdateMobileUserData {
 
 export interface MobileUserResult {
   user: IMobileUser;
-  token?: string;
+  token: string;
 }
 
 export interface EmailVerificationData {

@@ -18,7 +18,7 @@ import {
 } from "../../types/mobile/mobileUser";
 
 export class MobileUserService {
-  async createMobileUser(data: CreateMobileUserData): Promise<MobileUserResult> {
+  async createMobileUser(data: CreateMobileUserData, rememberMe: boolean = false): Promise<MobileUserResult> {
     const existingUser = await MobileUser.findOne({ email: data.email });
     if (existingUser) {
       throw new Error("User with this email already exists");
@@ -46,7 +46,7 @@ export class MobileUserService {
       throw new Error("Failed to send verification email. Please try again.");
     }
 
-    const token = generateToken((mobileUser._id as any).toString());
+    const token = generateToken((mobileUser._id as any).toString(), rememberMe);
 
     return { user: mobileUser, token };
   }
@@ -113,7 +113,7 @@ export class MobileUserService {
     return { email: mobileUser.email };
   }
 
-  async loginMobileUser(email: string, password: string): Promise<MobileUserResult> {
+  async loginMobileUser(email: string, password: string, rememberMe: boolean = false): Promise<MobileUserResult> {
     const mobileUser = await MobileUser.findOne({ email }).select("+password");
     if (!mobileUser) {
       throw new Error("Invalid email or password");
@@ -131,7 +131,7 @@ export class MobileUserService {
     mobileUser.lastLogin = new Date();
     await mobileUser.save();
 
-    const token = generateToken((mobileUser._id as any).toString());
+    const token = generateToken((mobileUser._id as any).toString(), rememberMe);
 
     return {
       user: mobileUser,
