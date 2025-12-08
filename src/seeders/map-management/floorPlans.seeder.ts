@@ -14,6 +14,10 @@ interface FloorPlanSeedData {
   floorLabel: string;
   floorNumber?: number;
   status?: MapFloorPlanStatus;
+  location?: {
+    latitude?: number;
+    longitude?: number;
+  };
   media?: {
     fileUrl?: string;
     fileKey?: string;
@@ -35,6 +39,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7580,
+      longitude: -73.9855,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg",
       fileKey: "floor-plans/citycare-main-building-ground-floor",
@@ -53,6 +61,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7580,
+      longitude: -73.9855,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
       fileKey: "floor-plans/citycare-main-building-first-floor",
@@ -71,6 +83,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "2nd Floor",
     floorNumber: 2,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7580,
+      longitude: -73.9855,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg",
       fileKey: "floor-plans/citycare-main-building-second-floor",
@@ -89,6 +105,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "3rd Floor",
     floorNumber: 3,
     status: MapFloorPlanStatus.DRAFT,
+    location: {
+      latitude: 40.7580,
+      longitude: -73.9855,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg",
       fileKey: "floor-plans/citycare-main-building-third-floor",
@@ -107,6 +127,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7585,
+      longitude: -73.9858,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-ground-floor",
@@ -125,6 +149,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7585,
+      longitude: -73.9858,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-first-floor",
@@ -143,6 +171,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "2nd Floor",
     floorNumber: 2,
     status: MapFloorPlanStatus.DRAFT,
+    location: {
+      latitude: 40.7585,
+      longitude: -73.9858,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg",
       fileKey: "floor-plans/citycare-emergency-wing-second-floor",
@@ -161,6 +193,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7575,
+      longitude: -73.9850,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg",
       fileKey: "floor-plans/citycare-diagnostic-center-ground-floor",
@@ -179,6 +215,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.7575,
+      longitude: -73.9850,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/2280569/pexels-photo-2280569.jpeg",
       fileKey: "floor-plans/citycare-diagnostic-center-first-floor",
@@ -197,6 +237,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 41.8781,
+      longitude: -87.6298,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg",
       fileKey: "floor-plans/lakeside-main-hospital-ground-floor",
@@ -215,6 +259,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 41.8781,
+      longitude: -87.6298,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg",
       fileKey: "floor-plans/lakeside-main-hospital-first-floor",
@@ -233,6 +281,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Departure Level",
     floorNumber: 2,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.6413,
+      longitude: -73.7781,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/28365735/pexels-photo-28365735.jpeg",
       fileKey: "floor-plans/skyways-terminal1-departure-level",
@@ -251,6 +303,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Arrival Level",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.6413,
+      longitude: -73.7781,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/28640604/pexels-photo-28640604.jpeg",
       fileKey: "floor-plans/skyways-terminal1-arrival-level",
@@ -269,6 +325,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "International Departures",
     floorNumber: 3,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 40.6418,
+      longitude: -73.7785,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg",
       fileKey: "floor-plans/skyways-terminal2-international-departures",
@@ -287,6 +347,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 25.7617,
+      longitude: -80.1918,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
       fileKey: "floor-plans/harborfront-north-wing-ground-floor",
@@ -305,6 +369,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 25.7617,
+      longitude: -80.1918,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571467/pexels-photo-1571467.jpeg",
       fileKey: "floor-plans/harborfront-north-wing-first-floor",
@@ -323,6 +391,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 39.7392,
+      longitude: -104.9903,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571462/pexels-photo-1571462.jpeg",
       fileKey: "floor-plans/aurora-mall-ground-floor",
@@ -341,6 +413,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 39.7392,
+      longitude: -104.9903,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571461/pexels-photo-1571461.jpeg",
       fileKey: "floor-plans/aurora-mall-first-floor",
@@ -359,6 +435,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "Ground Floor",
     floorNumber: 0,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 37.7749,
+      longitude: -122.4194,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg",
       fileKey: "floor-plans/greenfield-innovation-hub-ground-floor",
@@ -377,6 +457,10 @@ const floorPlansToSeed: FloorPlanSeedData[] = [
     floorLabel: "1st Floor",
     floorNumber: 1,
     status: MapFloorPlanStatus.PUBLISHED,
+    location: {
+      latitude: 37.7749,
+      longitude: -122.4194,
+    },
     media: {
       fileUrl: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg",
       fileKey: "floor-plans/greenfield-innovation-hub-first-floor",
@@ -485,6 +569,11 @@ const seedFloorPlans = async () => {
           const scaleOptions = ["1:50", "1:75", "1:100", "1:150", "1:200"];
           const scale = scaleOptions[seededRandom(floorSeed, 0, scaleOptions.length - 1)];
 
+          const orgLatBase = (orgSeed % 900) / 10 - 45; 
+          const orgLngBase = (orgSeed % 1800) / 10 - 180;
+          const buildingLatOffset = (parseInt((building._id as mongoose.Types.ObjectId).toString().slice(-2), 16) % 100) / 1000; 
+          const buildingLngOffset = (parseInt((building._id as mongoose.Types.ObjectId).toString().slice(-4, -2), 16) % 100) / 1000;
+          
           const floorPlan = new MapFloorPlan({
             organization: orgId,
             building: building._id,
@@ -492,6 +581,10 @@ const seedFloorPlans = async () => {
             floorLabel: floorLabel,
             floorNumber: floorNumber,
             status: status,
+            location: {
+              latitude: orgLatBase + buildingLatOffset,
+              longitude: orgLngBase + buildingLngOffset,
+            },
             media: {
               fileUrl: `https://images.pexels.com/photos/${seededRandom(floorSeed, 1000000, 9999999)}/pexels-photo-${seededRandom(floorSeed, 1000000, 9999999)}.jpeg`,
               fileKey: `floor-plans/${orgName.toLowerCase().replace(/\s+/g, '-')}-${building.name.toLowerCase().replace(/\s+/g, '-')}-${floorLabel?.toLowerCase().replace(/\s+/g, '-')}`,

@@ -61,19 +61,13 @@ export const mobileUserUpdateSchema = Joi.object({
       'string.min': 'Full name must be at least 2 characters long',
       'string.max': 'Full name cannot exceed 100 characters'
     }),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .optional()
-    .messages({
-      'string.email': 'Please provide a valid email address'
-    }),
   profileImage: Joi.string()
     .uri()
     .optional()
     .messages({
       'string.uri': 'Profile image must be a valid URL'
     })
-});
+}).unknown(false); // Reject unknown fields to prevent email from being passed
 
 export const mobilePasswordChangeSchema = Joi.object({
   currentPassword: Joi.string().required().messages({

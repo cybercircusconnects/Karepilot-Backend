@@ -12,6 +12,17 @@ const mediaSchema = Joi.object({
   }),
 }).optional();
 
+const locationSchema = Joi.object({
+  latitude: Joi.number().min(-90).max(90).optional().allow(null).messages({
+    "number.min": "Latitude must be between -90 and 90",
+    "number.max": "Latitude must be between -90 and 90",
+  }),
+  longitude: Joi.number().min(-180).max(180).optional().allow(null).messages({
+    "number.min": "Longitude must be between -180 and 180",
+    "number.max": "Longitude must be between -180 and 180",
+  }),
+}).optional();
+
 const metadataSchema = Joi.object({
   scale: Joi.string().trim().max(50).optional().allow(null, ""),
   description: Joi.string().trim().max(2000).optional().allow(null, ""),
@@ -43,6 +54,7 @@ export const createFloorPlanSchema = Joi.object({
     .messages({
       "any.only": `Status must be one of: ${Object.values(MapFloorPlanStatus).join(", ")}`,
     }),
+  location: locationSchema,
   media: mediaSchema,
   metadata: metadataSchema,
   isTemplate: Joi.boolean().optional(),
@@ -67,6 +79,7 @@ export const updateFloorPlanSchema = Joi.object({
     .messages({
       "any.only": `Status must be one of: ${Object.values(MapFloorPlanStatus).join(", ")}`,
     }),
+  location: locationSchema,
   media: mediaSchema,
   metadata: metadataSchema,
   isTemplate: Joi.boolean().optional(),

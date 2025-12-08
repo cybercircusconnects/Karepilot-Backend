@@ -82,10 +82,26 @@ const accessibilityFeaturesSchema = new Schema(
 
 const mapCoordinatesSchema = new Schema(
   {
-    x: { type: Number },
-    y: { type: Number },
-    latitude: { type: Number },
-    longitude: { type: Number },
+    x: { 
+      type: Number,
+      default: null,
+    },
+    y: { 
+      type: Number,
+      default: null,
+    },
+    latitude: { 
+      type: Number,
+      default: null,
+      min: [-90, "Latitude must be between -90 and 90"],
+      max: [90, "Latitude must be between -90 and 90"],
+    },
+    longitude: { 
+      type: Number,
+      default: null,
+      min: [-180, "Longitude must be between -180 and 180"],
+      max: [180, "Longitude must be between -180 and 180"],
+    },
   },
   { _id: false },
 );

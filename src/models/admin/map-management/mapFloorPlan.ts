@@ -13,6 +13,10 @@ export interface IMapFloorPlan extends Document {
   floorLabel: string;
   floorNumber?: number | null;
   status: MapFloorPlanStatus;
+  location: {
+    latitude?: number | null;
+    longitude?: number | null;
+  };
   media: {
     fileUrl?: string | null; 
     fileKey?: string | null; 
@@ -71,6 +75,20 @@ const mapFloorPlanSchema = new Schema<IMapFloorPlan>(
       enum: Object.values(MapFloorPlanStatus),
       default: MapFloorPlanStatus.DRAFT,
       index: true,
+    },
+    location: {
+      latitude: {
+        type: Number,
+        default: null,
+        min: [-90, "Latitude must be between -90 and 90"],
+        max: [90, "Latitude must be between -90 and 90"],
+      },
+      longitude: {
+        type: Number,
+        default: null,
+        min: [-180, "Longitude must be between -180 and 180"],
+        max: [180, "Longitude must be between -180 and 180"],
+      },
     },
     media: {
       fileUrl: { type: String, default: null },

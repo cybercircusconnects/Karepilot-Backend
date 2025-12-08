@@ -37,6 +37,11 @@ const buildMediaObject = (media?: MapFloorPlanMedia) => ({
   fileKey: media?.fileKey ?? null,
 });
 
+const buildLocationObject = (location?: { latitude?: number | null; longitude?: number | null }) => ({
+  latitude: typeof location?.latitude === "number" ? location.latitude : null,
+  longitude: typeof location?.longitude === "number" ? location.longitude : null,
+});
+
 const buildMetadataObject = (metadata?: MapFloorPlanMetadata) => ({
   scale: metadata?.scale ?? null,
   description: metadata?.description ?? null,
@@ -119,6 +124,10 @@ class MapFloorPlanService {
       floorNumber: typeof plain.floorNumber === "number" ? plain.floorNumber : null,
       status: plain.status,
       building,
+      location: {
+        latitude: typeof plain.location?.latitude === "number" ? plain.location.latitude : null,
+        longitude: typeof plain.location?.longitude === "number" ? plain.location.longitude : null,
+      },
       metadata: {
         scale: plain.metadata?.scale ?? null,
         description: plain.metadata?.description ?? null,
@@ -348,6 +357,7 @@ class MapFloorPlanService {
       floorLabel: data.floorLabel.trim(),
       floorNumber: typeof data.floorNumber === "number" ? data.floorNumber : null,
       status,
+      location: buildLocationObject(data.location),
       media: buildMediaObject(data.media),
       metadata: buildMetadataObject(data.metadata),
       version: 1,
@@ -414,6 +424,14 @@ class MapFloorPlanService {
       floorPlan.metadata = {
         ...floorPlan.metadata,
         ...metadata,
+      };
+    }
+
+    if (data.location) {
+      const location = buildLocationObject(data.location);
+      floorPlan.location = {
+        ...floorPlan.location,
+        ...location,
       };
     }
 

@@ -10,6 +10,11 @@ export interface MapFloorPlanMedia {
   fileKey?: string | null; 
 }
 
+export interface MapFloorPlanLocation {
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
 export interface MapFloorPlanMetadata {
   scale?: string | null;
   description?: string | null;
@@ -23,6 +28,7 @@ export interface CreateMapFloorPlanPayload {
   floorLabel: string;
   floorNumber?: number | null;
   status?: MapFloorPlanStatus;
+  location?: MapFloorPlanLocation;
   media?: MapFloorPlanMedia;
   metadata?: MapFloorPlanMetadata;
   isTemplate?: boolean;
@@ -35,6 +41,7 @@ export interface UpdateMapFloorPlanPayload {
   floorLabel?: string;
   floorNumber?: number | null;
   status?: MapFloorPlanStatus;
+  location?: MapFloorPlanLocation;
   media?: MapFloorPlanMedia;
   metadata?: MapFloorPlanMetadata;
   isTemplate?: boolean;
@@ -63,6 +70,7 @@ export interface MapFloorPlanOverview {
     id: string;
     name: string;
   } | null;
+  location: MapFloorPlanLocation;
   metadata: MapFloorPlanMetadata;
   media: MapFloorPlanMedia;
   version: number;

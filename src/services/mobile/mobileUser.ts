@@ -179,14 +179,20 @@ export class MobileUserService {
       throw new Error("Mobile user not found");
     }
 
-    if (data.profileImage && mobileUser.profileImage) {
+    // Explicitly exclude email from updates - users cannot change email from mobile
+    const { email, ...updateData } = data as any;
+    if (email !== undefined) {
+      delete (updateData as any).email;
+    }
+
+    if (updateData.profileImage && mobileUser.profileImage) {
       const oldPublicId = extractPublicIdFromUrl(mobileUser.profileImage);
       if (oldPublicId) {
         await deleteImage(oldPublicId);
       }
     }
 
-    const updatedMobileUser = await MobileUser.findByIdAndUpdate(id, data, {
+    const updatedMobileUser = await MobileUser.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
     });

@@ -175,7 +175,12 @@ export const getMobileProfile = async (req: Request, res: Response): Promise<voi
 export const updateMobileProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = (req as any).user.id;
-    const updateData = req.body;
+    const { email, ...updateData } = req.body; // Explicitly remove email from update data
+
+    // Ensure email is not in the update data
+    if (email) {
+      delete (updateData as any).email;
+    }
 
     const mobileUser = await mobileUserService.updateMobileUser(userId, updateData);
 

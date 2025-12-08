@@ -44,8 +44,8 @@ export interface CreateMobileUserData {
 
 export interface UpdateMobileUserData {
   fullName?: string;
-  email?: string;
   profileImage?: string;
+  // Email is intentionally excluded - users cannot change their email from mobile
 }
 
 export interface MobileUserResult {

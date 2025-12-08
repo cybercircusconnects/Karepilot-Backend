@@ -223,10 +223,17 @@ const seedPointsOfInterest = async () => {
         const roomPrefix = template.category.substring(0, 3).toUpperCase();
         const roomNumber = `${roomPrefix}-${seededRandom(itemSeed, 100, 999)}`;
 
-        const baseLat = seededRandom(itemSeed, 30, 60);
-        const baseLng = seededRandom(itemSeed + 1000, -120, 20);
-        const latOffset = randomFloat(-0.1, 0.1);
-        const lngOffset = randomFloat(-0.1, 0.1);
+        // Generate location coordinates based on organization (deterministic)
+        // Use organization seed to create base coordinates within valid ranges
+        const orgLatBase = (orgSeed % 900) / 10 - 45; // Range: -45 to 45
+        const orgLngBase = (orgSeed % 1800) / 10 - 180; // Range: -180 to 180
+        const buildingLatOffset = (parseInt((building._id as mongoose.Types.ObjectId).toString().slice(-2), 16) % 100) / 1000; // Small offset per building
+        const buildingLngOffset = (parseInt((building._id as mongoose.Types.ObjectId).toString().slice(-4, -2), 16) % 100) / 1000;
+        const poiLatOffset = (itemSeed % 100) / 1000; // Small offset per POI
+        const poiLngOffset = ((itemSeed * 7) % 100) / 1000; // Different offset pattern
+        
+        const latitude = orgLatBase + buildingLatOffset + poiLatOffset;
+        const longitude = orgLngBase + buildingLngOffset + poiLngOffset;
 
         const status = seededRandom(itemSeed, 1, 10) <= 8 
           ? PointOfInterestStatus.ACTIVE 
@@ -278,8 +285,8 @@ const seedPointsOfInterest = async () => {
           },
           status: status,
           mapCoordinates: {
-            latitude: baseLat + latOffset,
-            longitude: baseLng + lngOffset,
+            latitude: latitude,
+            longitude: longitude,
           },
           isActive: status === PointOfInterestStatus.ACTIVE,
           createdAt: new Date(Date.now() - seededRandom(itemSeed, 0, 180) * 24 * 60 * 60 * 1000),
